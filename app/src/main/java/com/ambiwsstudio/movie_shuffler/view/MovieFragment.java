@@ -92,7 +92,7 @@ public class MovieFragment extends Fragment {
                     binding.imageViewPoster.setImageResource(R.drawable.postermissing);
 
                     int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
-                    System.out.println("DIFF:" + diff + "//" + scrollView.getHeight());
+                    System.out.println(binding.textViewTitle.getY());
 
                     if (diff > 0)
                         scrollView.smoothScrollTo(0, diff);
@@ -101,27 +101,35 @@ public class MovieFragment extends Fragment {
 
                 if (!movie.getTitle().equals("N/A"))
                     binding.textViewTitle.setText(movie.getTitle());
+                else binding.textViewTitle.setVisibility(View.GONE);
 
                 if (!movie.getYear().equals("N/A"))
                     binding.textViewYear.setText(String.format("Year: %s", movie.getYear()));
+                else binding.textViewYear.setVisibility(View.GONE);
 
                 if (!movie.getRuntime().equals("N/A"))
                     binding.textViewRuntime.setText(String.format("Runtime: %s", movie.getRuntime()));
+                else binding.textViewRuntime.setVisibility(View.GONE);
 
                 if (!movie.getActors().equals("N/A"))
                     binding.textViewActors.setText(String.format("Actors: %s", movie.getActors()));
+                else binding.textViewActors.setVisibility(View.GONE);
 
                 if (!movie.getGenre().equals("N/A"))
                     binding.textViewGenre.setText(String.format("Genre: %s", movie.getGenre()));
+                else binding.textViewGenre.setVisibility(View.GONE);
 
                 if (!movie.getPlot().equals("N/A"))
                     binding.textViewPlot.setText(String.format("Plot: %s", movie.getPlot()));
+                else binding.textViewPlot.setVisibility(View.GONE);
 
                 if (!movie.getDirector().equals("N/A"))
                     binding.textViewDirector.setText(String.format("Director: %s", movie.getDirector()));
+                else binding.textViewDirector.setVisibility(View.GONE);
 
                 if (!movie.getMetascore().equals("N/A"))
                     binding.textViewScore.setText(String.format("Metascore: %s", movie.getMetascore()));
+                else binding.textViewScore.setVisibility(View.GONE);
 
             }
         });

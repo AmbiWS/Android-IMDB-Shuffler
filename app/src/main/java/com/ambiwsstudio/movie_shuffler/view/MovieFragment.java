@@ -92,7 +92,7 @@ public class MovieFragment extends Fragment {
                     binding.imageViewPoster.setImageResource(R.drawable.postermissing);
 
                     int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
-                    System.out.println("DIFF:" + diff);;
+                    System.out.println("DIFF:" + diff + "//" + scrollView.getHeight());
 
                     if (diff > 0)
                         scrollView.smoothScrollTo(0, diff);

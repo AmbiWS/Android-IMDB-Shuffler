@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +20,7 @@ import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 public class MovieCollectionFragment extends Fragment {
 
     MovieCollectionPagerAdapter adapter;
-    ViewPager viewPager;
+    ViewPager2 viewPager2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,8 +30,8 @@ public class MovieCollectionFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        adapter = new MovieCollectionPagerAdapter(getChildFragmentManager());
-        viewPager = view.findViewById(R.id.pager);
-        viewPager.setAdapter(adapter);
+        adapter = new MovieCollectionPagerAdapter(MovieCollectionFragment.this.getActivity());
+        viewPager2 = view.findViewById(R.id.pager);
+        viewPager2.setAdapter(adapter);
     }
 }

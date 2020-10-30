@@ -5,37 +5,41 @@ import android.os.Bundle;
 import com.ambiwsstudio.movie_shuffler.view.MovieFragment;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class MovieCollectionPagerAdapter extends FragmentStatePagerAdapter {
+public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
 
-    public MovieCollectionPagerAdapter(FragmentManager fm) {
-        super(fm);
+    private final static int pagesCount = 5;
+
+    public MovieCollectionPagerAdapter(FragmentActivity fa) {
+        super(fa);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position); // Ovr
+    }
+
+    @Override
+    public boolean containsItem(long itemId) {
+        return super.containsItem(itemId); // Ovr
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
-
+    public Fragment createFragment(int position) {
         Fragment fragment = new MovieFragment();
         Bundle args = new Bundle();
-        args.putInt(MovieFragment.ARG_OBJECT, position + 1);
+        args.putString(MovieFragment.ARG_TAG, String.valueOf(position + 1));
         fragment.setArguments(args);
         return fragment;
-
     }
 
     @Override
-    public int getCount() {
-        return 100;
+    public int getItemCount() {
+        return pagesCount;
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return "OBJECT " + (position + 1);
-    }
 }

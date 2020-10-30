@@ -2,12 +2,10 @@ package com.ambiwsstudio.movie_shuffler.model;
 
 public class User {
 
-    private String name;
     private int age;
 
     public User(int age) {
 
-        this.name = "User";
         this.age = age;
 
     }

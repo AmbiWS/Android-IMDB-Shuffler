@@ -56,33 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("STARTED...");
-        /*MovieService.getInstance()
-                .getMovieAPI()
-                .getMovie("tt1375666")
-                .enqueue(new Callback<Movie>() {
-                    @Override
-                    public void onResponse(Call<Movie> call, Response<Movie> response) {
-
-                        Movie movie = response.body();
-
-                        System.out.println(movie.getTitle());
-                        System.out.println(movie.getYear());
-                        System.out.println(movie.getCountry());
-                        System.out.println(movie.getGenre());
-                        System.out.println(movie.getImdbRating());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Movie> call, Throwable t) {
-
-                        Toast.makeText(getApplicationContext(), "Error was occurred!", Toast.LENGTH_SHORT).show();
-                        t.printStackTrace();
-
-                    }
-                });*/
-
         Intent intent = new Intent(this, MovieActivity.class);
         startActivity(intent);
 

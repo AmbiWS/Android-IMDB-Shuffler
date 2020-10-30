@@ -90,6 +90,38 @@ public class Movie {
         return year;
     }
 
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public String getMetascore() {
+        return metascore;
+    }
+
     public void setYear(String year) {
         this.year = year;
     }
@@ -110,24 +142,12 @@ public class Movie {
         this.released = released;
     }
 
-    public String getRuntime() {
-        return runtime;
-    }
-
     public void setRuntime(String runtime) {
         this.runtime = runtime;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public String getDirector() {
-        return director;
     }
 
     public void setDirector(String director) {
@@ -142,16 +162,8 @@ public class Movie {
         this.writer = writer;
     }
 
-    public String getActors() {
-        return actors;
-    }
-
     public void setActors(String actors) {
         this.actors = actors;
-    }
-
-    public String getPlot() {
-        return plot;
     }
 
     public void setPlot(String plot) {
@@ -182,16 +194,8 @@ public class Movie {
         this.awards = awards;
     }
 
-    public String getPoster() {
-        return poster;
-    }
-
     public void setPoster(String poster) {
         this.poster = poster;
-    }
-
-    public String getMetascore() {
-        return metascore;
     }
 
     public void setMetascore(String metascore) {
@@ -260,10 +264,6 @@ public class Movie {
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getResponse() {
-        return response;
     }
 
     public void setResponse(String response) {

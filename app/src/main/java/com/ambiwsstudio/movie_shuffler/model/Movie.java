@@ -1,4 +1,4 @@
-package com.ambiwsstudio.aliexpress_shuffler.model;
+package com.ambiwsstudio.movie_shuffler.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

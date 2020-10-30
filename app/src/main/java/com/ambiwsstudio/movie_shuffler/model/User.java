@@ -1,4 +1,4 @@
-package com.ambiwsstudio.aliexpress_shuffler.model;
+package com.ambiwsstudio.movie_shuffler.model;
 
 public class User {
 

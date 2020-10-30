@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/movieCollectionFrame"
-        android:name="com.ambiwsstudio.aliexpress_shuffler.view.MovieCollectionFragment"
+        android:name="com.ambiwsstudio.movie_shuffler.view.MovieCollectionFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

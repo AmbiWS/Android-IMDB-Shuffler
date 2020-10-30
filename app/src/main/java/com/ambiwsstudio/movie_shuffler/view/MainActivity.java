@@ -1,23 +1,18 @@
-package com.ambiwsstudio.aliexpress_shuffler.view;
+package com.ambiwsstudio.movie_shuffler.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.ambiwsstudio.aliexpress_shuffler.R;
-import com.ambiwsstudio.aliexpress_shuffler.databinding.ActivityMainBinding;
-import com.ambiwsstudio.aliexpress_shuffler.model.Movie;
-import com.ambiwsstudio.aliexpress_shuffler.model.User;
-import com.ambiwsstudio.aliexpress_shuffler.service.MovieService;
-import com.ambiwsstudio.aliexpress_shuffler.viewmodel.UserViewModel;
+import com.ambiwsstudio.movie_shuffler.R;
+import com.ambiwsstudio.movie_shuffler.databinding.ActivityMainBinding;
+import com.ambiwsstudio.movie_shuffler.model.User;
+import com.ambiwsstudio.movie_shuffler.viewmodel.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
 

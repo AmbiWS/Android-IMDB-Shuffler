@@ -4,7 +4,7 @@
     <data>
         <variable
             name="UserViewModel"
-            type="com.ambiwsstudio.aliexpress_shuffler.viewmodel.UserViewModel" />
+            type="com.ambiwsstudio.movie_shuffler.viewmodel.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

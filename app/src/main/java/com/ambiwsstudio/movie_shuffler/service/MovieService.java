@@ -1,6 +1,5 @@
-package com.ambiwsstudio.aliexpress_shuffler.service;
+package com.ambiwsstudio.movie_shuffler.service;
 
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

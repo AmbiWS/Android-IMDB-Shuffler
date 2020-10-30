@@ -1,10 +1,10 @@
-package com.ambiwsstudio.aliexpress_shuffler.view;
+package com.ambiwsstudio.movie_shuffler.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.ambiwsstudio.aliexpress_shuffler.R;
+import com.ambiwsstudio.movie_shuffler.R;
 
 public class MovieActivity extends AppCompatActivity {
 

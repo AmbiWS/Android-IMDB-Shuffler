@@ -1,4 +1,4 @@
-package com.ambiwsstudio.aliexpress_shuffler.view;
+package com.ambiwsstudio.movie_shuffler.view;
 
 import android.os.Bundle;
 
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ambiwsstudio.aliexpress_shuffler.R;
+import com.ambiwsstudio.movie_shuffler.R;
 
 /**
  * A simple {@link Fragment} subclass.

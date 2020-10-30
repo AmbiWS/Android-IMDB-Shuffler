@@ -1,8 +1,8 @@
-package com.ambiwsstudio.aliexpress_shuffler.adapter;
+package com.ambiwsstudio.movie_shuffler.adapter;
 
 import android.os.Bundle;
 
-import com.ambiwsstudio.aliexpress_shuffler.view.MovieFragment;
+import com.ambiwsstudio.movie_shuffler.view.MovieFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

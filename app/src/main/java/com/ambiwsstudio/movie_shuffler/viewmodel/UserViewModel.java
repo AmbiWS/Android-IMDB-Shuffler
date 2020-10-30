@@ -1,8 +1,8 @@
-package com.ambiwsstudio.aliexpress_shuffler.viewmodel;
+package com.ambiwsstudio.movie_shuffler.viewmodel;
 
 import android.view.View;
 
-import com.ambiwsstudio.aliexpress_shuffler.model.User;
+import com.ambiwsstudio.movie_shuffler.model.User;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

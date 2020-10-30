@@ -1,11 +1,10 @@
-package com.ambiwsstudio.aliexpress_shuffler.service;
+package com.ambiwsstudio.movie_shuffler.service;
 
-import com.ambiwsstudio.aliexpress_shuffler.model.Movie;
+import com.ambiwsstudio.movie_shuffler.model.Movie;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MovieAPI {

@@ -4,13 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.ambiwsstudio.aliexpress_shuffler.R;
 import com.ambiwsstudio.aliexpress_shuffler.databinding.ActivityMainBinding;
+import com.ambiwsstudio.aliexpress_shuffler.model.Movie;
 import com.ambiwsstudio.aliexpress_shuffler.model.User;
+import com.ambiwsstudio.aliexpress_shuffler.service.MovieService;
 import com.ambiwsstudio.aliexpress_shuffler.viewmodel.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +60,36 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        System.out.println("STARTED...");
+        /*MovieService.getInstance()
+                .getMovieAPI()
+                .getMovie("tt1375666")
+                .enqueue(new Callback<Movie>() {
+                    @Override
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+
+                        Movie movie = response.body();
+
+                        System.out.println(movie.getTitle());
+                        System.out.println(movie.getYear());
+                        System.out.println(movie.getCountry());
+                        System.out.println(movie.getGenre());
+                        System.out.println(movie.getImdbRating());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Movie> call, Throwable t) {
+
+                        Toast.makeText(getApplicationContext(), "Error was occurred!", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+
+                    }
+                });*/
+
+        Intent intent = new Intent(this, MovieActivity.class);
+        startActivity(intent);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,15 +10,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -38,6 +42,7 @@ public class MovieFragment extends Fragment {
 
     private MovieCollectionViewModel movieCollectionViewModel;
     FragmentMovieBinding binding;
+    ScrollView scrollView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,16 +61,43 @@ public class MovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         Bundle args = getArguments();
+        scrollView = (ScrollView) view.getRootView();
 
         movieCollectionViewModel = ViewModelProviders.of(this).get(args.getString(ARG_TAG), MovieCollectionViewModel.class);
         movieCollectionViewModel.getMovie().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
 
-                if (!movie.getPoster().equals("N/A"))
+                if (!movie.getPoster().equals("N/A")) {
                     Picasso.with(MovieFragment.this.getContext())
-                        .load(movie.getPoster())
-                        .into(binding.imageViewPoster);
+                            .load(movie.getPoster())
+                            .into(binding.imageViewPoster, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
+
+                                    if (diff > 0)
+                                        scrollView.smoothScrollTo(0, diff);
+                                }
+
+                                @Override
+                                public void onError() {
+
+
+
+                                }
+                            });
+                } else {
+
+                    binding.imageViewPoster.setImageResource(R.drawable.postermissing);
+
+                    int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
+                    System.out.println("DIFF:" + diff);;
+
+                    if (diff > 0)
+                        scrollView.smoothScrollTo(0, diff);
+
+                }
 
                 if (!movie.getTitle().equals("N/A"))
                     binding.textViewTitle.setText(movie.getTitle());
@@ -93,6 +125,8 @@ public class MovieFragment extends Fragment {
 
             }
         });
+
+
 
     }
 }

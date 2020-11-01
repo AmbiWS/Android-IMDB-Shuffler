@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -33,5 +34,30 @@ public class MovieCollectionFragment extends Fragment {
         adapter = new MovieCollectionPagerAdapter(MovieCollectionFragment.this.getActivity());
         viewPager2 = view.findViewById(R.id.pager);
         viewPager2.setAdapter(adapter);
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentByTag(String.valueOf("f" + position));
+
+                if (fragment != null && position != 0)
+                    fragment.smoothScrollDown();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
+
     }
 }

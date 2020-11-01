@@ -1,5 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -9,7 +10,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,16 +32,7 @@ import com.squareup.picasso.Picasso;
  */
 public class MovieFragment extends Fragment {
 
-    public static final String ARG_POSTER_URL = "poster";
-    public static final String ARG_TITLE = "title";
-    public static final String ARG_YEAR = "year";
-    public static final String ARG_RUNTIME = "runtime";
-    public static final String ARG_GENRE = "genre";
-    public static final String ARG_DIRECTOR = "director";
-    public static final String ARG_ACTORS = "actors";
-    public static final String ARG_PLOT = "plot";
-    public static final String ARG_SCORE = "score";
-    public static final String ARG_TAG = "tag";
+    public static  String ARG_TAG = "tag";
 
     private MovieCollectionViewModel movieCollectionViewModel;
     FragmentMovieBinding binding;
@@ -50,8 +44,6 @@ public class MovieFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_movie, container, false);
-
-        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 
         View view = binding.getRoot();
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
@@ -71,16 +63,18 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        System.out.println("NEXT FRAG CREATED");
         Bundle args = getArguments();
+
+        if (args != null)
+            ARG_TAG = args.getString(ARG_TAG);
+
         scrollView = (ScrollView) view.getRootView();
+        scrollView.setSmoothScrollingEnabled(true);
 
         movieCollectionViewModel = ViewModelProviders.of(this).get(args.getString(ARG_TAG), MovieCollectionViewModel.class);
         movieCollectionViewModel.getMovie().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
-
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA->" + movie.getTitle());
 
                 if (movie.getImage() != null) {
 
@@ -124,15 +118,38 @@ public class MovieFragment extends Fragment {
                     binding.textViewScore.setText(String.format("Metascore: %s", movie.getMetascore()));
                 else binding.textViewScore.setVisibility(View.GONE);
 
-                int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
-                System.out.println("ScrollH:" + scrollView.getHeight());
-                /*if (diff > 0)
-                    scrollView.smoothScrollTo(0, diff);*/
+                if (ARG_TAG.equals("0")) {
+
+                    smoothScrollDown();
+
+                }
 
             }
         });
 
+    }
 
+
+    void smoothScrollDown() {
+
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+
+                new CountDownTimer(1500, 20) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                        scrollView.scrollTo(0, (int)(binding.textViewTitle.getRootView().getBottom() - millisUntilFinished));
+
+                    }
+
+                    public void onFinish() {
+                    }
+                }.start();
+
+            }
+        });
 
     }
 }

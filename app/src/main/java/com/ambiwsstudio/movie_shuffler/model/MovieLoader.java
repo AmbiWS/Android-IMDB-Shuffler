@@ -65,7 +65,7 @@ public class MovieLoader {
 
             }
 
-            //System.out.println("c:" + loaderCounter + " // a:" + ++requestCounter);
+            System.out.println("c:" + loaderCounter + " // a:" + ++requestCounter);
 
             MovieService.getInstance()
                     .getMovieAPI()

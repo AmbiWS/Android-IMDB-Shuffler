@@ -1,20 +1,9 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.service.MovieService;
-
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingAdapter;
-import androidx.databinding.InverseBindingListener;
+import com.ambiwsstudio.movie_shuffler.model.MovieLoader;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MovieCollectionViewModel extends ViewModel {
 
@@ -28,7 +17,6 @@ public class MovieCollectionViewModel extends ViewModel {
     public MutableLiveData<String> plot = new MutableLiveData<>();
     public MutableLiveData<String> metascore = new MutableLiveData<>();
     private MutableLiveData<Movie> movieMutableLiveData;
-    private static int requestCounter = 0;
 
     public MutableLiveData<Movie> getMovie() {
 
@@ -39,53 +27,10 @@ public class MovieCollectionViewModel extends ViewModel {
 
     }
 
-    private void loadMovie(final int loadCount) {
-
-        if (loadCount > 10) {
-
-            Movie movie = new Movie();
-            movie.setTitle("Sorry, service unavailable right now.");
-            movieMutableLiveData.setValue(movie);
-            return;
-
-        }
-
-        System.out.println(requestCounter++);
-
-        MovieService.getInstance()
-                .getMovieAPI()
-                .getMovie(Commons.randomizeMovieId())
-                .enqueue(new Callback<Movie>() {
-                    @Override
-                    public void onResponse(Call<Movie> call, Response<Movie> response) {
-
-                        System.out.println(loadCount);
-                        if (response.body().getResponse().equals("False")) {
-
-                            loadMovie(loadCount + 1);
-
-                        } else {
-
-                            Movie movie = response.body();
-                            movieMutableLiveData.setValue(movie);
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Movie> call, Throwable t) {
-
-                        t.printStackTrace();
-
-                    }
-                });
-
-    }
-
     public MovieCollectionViewModel() {
 
-       loadMovie(1);
+        MovieLoader.getInstance().isNeedViewUpdate(true);
+        MovieLoader.getInstance().loadMovie(this, 1);
 
     }
 

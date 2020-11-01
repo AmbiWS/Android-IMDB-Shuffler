@@ -16,7 +16,7 @@ public class CustomImageViewBinder {
     @BindingAdapter(value = "linkAttrChanged")
     public static void setListener(CustomImageView customImageView, final InverseBindingListener linkAttrChanged) {
 
-
+        // TODO
 
     }
 

@@ -51,6 +51,8 @@ public class MovieFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_movie, container, false);
 
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+
         View view = binding.getRoot();
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
 
@@ -60,6 +62,7 @@ public class MovieFragment extends Fragment {
     /*
 
         TODO: OneSideScrolling
+        TODO: autoscroll down
         TODO: Future fragments preloading
         TODO: Fragment redesign (Bg behind text, More data, Link to IMDB, etc...
 
@@ -68,6 +71,7 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        System.out.println("NEXT FRAG CREATED");
         Bundle args = getArguments();
         scrollView = (ScrollView) view.getRootView();
 
@@ -76,34 +80,15 @@ public class MovieFragment extends Fragment {
             @Override
             public void onChanged(Movie movie) {
 
-                if (!movie.getPoster().equals("N/A")) {
-                    Picasso.with(MovieFragment.this.getContext())
-                            .load(movie.getPoster())
-                            .into(binding.imageViewPoster, new Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA->" + movie.getTitle());
 
-                                    if (diff > 0)
-                                        scrollView.smoothScrollTo(0, diff);
-                                }
+                if (movie.getImage() != null) {
 
-                                @Override
-                                public void onError() {
+                    binding.imageViewPoster.setImageBitmap(movie.getImage());
 
-
-
-                                }
-                            });
                 } else {
 
                     binding.imageViewPoster.setImageResource(R.drawable.postermissing);
-
-                    int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
-                    System.out.println(binding.textViewTitle.getY());
-
-                    if (diff > 0)
-                        scrollView.smoothScrollTo(0, diff);
 
                 }
 
@@ -138,6 +123,11 @@ public class MovieFragment extends Fragment {
                 if (!movie.getMetascore().equals("N/A"))
                     binding.textViewScore.setText(String.format("Metascore: %s", movie.getMetascore()));
                 else binding.textViewScore.setVisibility(View.GONE);
+
+                int diff = scrollView.getHeight() - Resources.getSystem().getDisplayMetrics().heightPixels;
+                System.out.println("ScrollH:" + scrollView.getHeight());
+                /*if (diff > 0)
+                    scrollView.smoothScrollTo(0, diff);*/
 
             }
         });

@@ -1,6 +1,13 @@
 package com.ambiwsstudio.movie_shuffler.commons;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 
 public class Commons {
@@ -13,6 +20,5 @@ public class Commons {
         return "tt" + String.format(Locale.US, "%07d", randomId);
 
     }
-
 
 }

@@ -21,7 +21,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp">
 
                 <com.ambiwsstudio.movie_shuffler.adapter.CustomImageView
                     android:id="@+id/imageViewPoster"
@@ -58,6 +59,7 @@
                         android:fontFamily="@font/abeezee"
                         android:textAlignment="center"
                         android:textSize="18sp"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.title}" />
 
                     <TextView
@@ -69,6 +71,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.genre}" />
 
                     <TextView
@@ -80,6 +83,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.year}" />
 
                     <TextView
@@ -92,6 +96,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:maxLines="3"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.actors}" />
 
                     <TextView
@@ -103,6 +108,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.director}" />
 
                     <TextView
@@ -115,6 +121,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:maxLines="6"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.plot}" />
 
                     <TextView
@@ -126,6 +133,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.runtime}" />
 
                     <TextView
@@ -137,6 +145,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
+                        android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.metascore}" />
 
                 </LinearLayout>

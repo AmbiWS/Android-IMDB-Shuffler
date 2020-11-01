@@ -1,5 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.model;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -77,6 +79,16 @@ public class Movie {
     @SerializedName("Response")
     @Expose
     private String response;
+
+    private Bitmap image;
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 
     public String getTitle() {
         return title;

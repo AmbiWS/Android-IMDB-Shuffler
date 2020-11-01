@@ -7,8 +7,9 @@ public class Commons {
 
     public static String randomizeMovieId() {
 
-        int moviesCount = 10_000_000;
-        int randomId = (int)(Math.random() * moviesCount) + 1;
+        int moviesIdFloor = 400_000;
+        int moviesIdCeil = 2_000_000;
+        int randomId = (int)(Math.random() * (moviesIdCeil - moviesIdFloor)) + moviesIdFloor;
         return "tt" + String.format(Locale.US, "%07d", randomId);
 
     }

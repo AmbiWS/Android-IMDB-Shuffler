@@ -57,6 +57,14 @@ public class MovieFragment extends Fragment {
         return view;
     }
 
+    /*
+
+        TODO: OneSideScrolling
+        TODO: Future fragments preloading
+        TODO: Fragment redesign (Bg behind text, More data, Link to IMDB, etc...
+
+     */
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 

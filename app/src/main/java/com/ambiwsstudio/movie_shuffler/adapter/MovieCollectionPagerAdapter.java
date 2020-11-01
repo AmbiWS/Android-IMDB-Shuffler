@@ -19,12 +19,12 @@ public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public long getItemId(int position) {
-        return super.getItemId(position); // Ovr
+        return super.getItemId(position);
     }
 
     @Override
     public boolean containsItem(long itemId) {
-        return super.containsItem(itemId); // Ovr
+        return super.containsItem(itemId);
     }
 
     @NonNull

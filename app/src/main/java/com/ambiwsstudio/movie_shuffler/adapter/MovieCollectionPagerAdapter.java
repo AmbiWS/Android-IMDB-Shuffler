@@ -11,7 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
 
-    private final static int pagesCount = 5;
+    private static int pagesCount = 5;
 
     public MovieCollectionPagerAdapter(FragmentActivity fa) {
         super(fa);
@@ -30,6 +30,7 @@ public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        pagesCount++;
         Fragment fragment = new MovieFragment();
         Bundle args = new Bundle();
         args.putString(MovieFragment.ARG_TAG, String.valueOf(position + 1));

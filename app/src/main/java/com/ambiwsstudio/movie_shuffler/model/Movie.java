@@ -94,10 +94,6 @@ public class Movie {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getYear() {
         return year;
     }
@@ -132,6 +128,10 @@ public class Movie {
 
     public String getMetascore() {
         return metascore;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setYear(String year) {

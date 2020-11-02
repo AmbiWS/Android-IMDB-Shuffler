@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="MovieCollectionViewModel"
-            type="com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel" />
+            name="MovieViewModel"
+            type="com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel" />
     </data>
 
     <ScrollView
@@ -37,7 +37,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:link="@={MovieCollectionViewModel.poster}" />
+                    app:link="@={MovieViewModel.poster}" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -46,6 +46,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +64,7 @@
                         android:textAlignment="center"
                         android:textSize="18sp"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.title}" />
+                        android:text="@={MovieViewModel.title}" />
 
                     <TextView
                         android:id="@+id/textViewGenre"
@@ -75,7 +76,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.genre}" />
+                        android:text="@={MovieViewModel.genre}" />
 
                     <TextView
                         android:id="@+id/textViewYear"
@@ -87,7 +88,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.year}" />
+                        android:text="@={MovieViewModel.year}" />
 
                     <TextView
                         android:id="@+id/textViewActors"
@@ -100,7 +101,7 @@
                         android:fontFamily="@font/abeezee"
                         android:maxLines="3"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.actors}" />
+                        android:text="@={MovieViewModel.actors}" />
 
                     <TextView
                         android:id="@+id/textViewDirector"
@@ -112,7 +113,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.director}" />
+                        android:text="@={MovieViewModel.director}" />
 
                     <TextView
                         android:id="@+id/textViewPlot"
@@ -125,7 +126,7 @@
                         android:fontFamily="@font/abeezee"
                         android:maxLines="6"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.plot}" />
+                        android:text="@={MovieViewModel.plot}" />
 
                     <TextView
                         android:id="@+id/textViewRuntime"
@@ -137,7 +138,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.runtime}" />
+                        android:text="@={MovieViewModel.runtime}" />
 
                     <TextView
                         android:id="@+id/textViewScore"
@@ -149,7 +150,7 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorTextDark"
-                        android:text="@={MovieCollectionViewModel.imdbRating}" />
+                        android:text="@={MovieViewModel.imdbRating}" />
 
                     <TextView
                         android:id="@+id/imdbLink"
@@ -162,7 +163,8 @@
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="@string/imdbText"
-                        android:onClick="@{(view) -> MovieCollectionViewModel.onClick(view)}"/>
+                        android:onClick="@{(view) -> MovieViewModel.onClick(view)}"
+                        android:layout_marginBottom="16dp"/>
 
                 </LinearLayout>
 

@@ -1,8 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,32 +10,27 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.CountDownTimer;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieFragment extends Fragment {
 
-    public static  String ARG_TAG = "tag";
+    public static String ARG_TAG = "tag";
 
-    private MovieCollectionViewModel movieCollectionViewModel;
+    private MovieViewModel movieViewModel;
     FragmentMovieBinding binding;
     ScrollView scrollView;
     private boolean isScrolled = false;
@@ -75,12 +68,12 @@ public class MovieFragment extends Fragment {
         scrollView.setSmoothScrollingEnabled(true);
 
         String key = ARG_TAG;
-        movieCollectionViewModel = ViewModelProviders.of(this).get(key, MovieCollectionViewModel.class);
+        movieViewModel = ViewModelProviders.of(this).get(key, MovieViewModel.class);
         binding.setLifecycleOwner(this);
-        binding.setMovieCollectionViewModel(movieCollectionViewModel);
+        binding.setMovieViewModel(movieViewModel);
         binding.linearLayout.setVisibility(View.GONE);
 
-        movieCollectionViewModel.getMovie().observe(this, new Observer<Movie>() {
+        movieViewModel.getMovie().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
 
@@ -132,18 +125,20 @@ public class MovieFragment extends Fragment {
                     binding.imdbLink.setText(R.string.imdbText);
                 else binding.imdbLink.setVisibility(View.GONE);
 
-                System.out.println(movie.getImdbID());
+                System.out.println(ARG_TAG);
 
                 if (ARG_TAG.equals("0")) {
 
                     smoothScrollDown();
+                    allowSideScroll();
 
                 }
+
 
             }
         });
 
-        movieCollectionViewModel.getImdbProceedAccess().observe(this, new Observer<String>() {
+        movieViewModel.getImdbProceedAccess().observe(this, new Observer<String>() {
 
             String IMDB_BASE_URL = "https://www.imdb.com";
 
@@ -163,6 +158,12 @@ public class MovieFragment extends Fragment {
 
             }
         });
+
+    }
+
+    private void allowSideScroll() {
+
+        MovieCollectionFragment.getInstance().viewPager2.setUserInputEnabled(true);
 
     }
 

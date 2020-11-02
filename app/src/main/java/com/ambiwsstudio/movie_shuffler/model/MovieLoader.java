@@ -31,6 +31,7 @@ public class MovieLoader {
     private int requestCounter = 0;
     private boolean isNeedViewUpdate = false;
     private Movie currentMovie;
+    private Target target;
     private ArrayDeque<Movie> moviesList = new ArrayDeque<>();
 
     public static MovieLoader getInstance() {
@@ -74,32 +75,43 @@ public class MovieLoader {
                         @Override
                         public void onResponse(Call<Movie> call, Response<Movie> response) {
 
+                            System.out.println("ON RESPONSE");
+
                             if (response.body().getResponse().equals("False")
                                     /*|| response.body().getTitle().contains("Episode")
                                     || response.body().getGenre().equals("N/A")
                                     || response.body().getYear().equals("N/A")
-                                    || response.body().getActors().equals("N/A")*/) {
+                                    || response.body().getActors().equals("N/A")*/
+                                    /*|| response.body().getPoster().equals("N/A")*/) {
+
+                                System.out.println("ON RESPONSE FALSE");
 
                                 loaderCounter++;
                                 sendRequest();
 
                             } else {
 
+                                System.out.println("ON RESPONSE SUCCESS");
+
                                 loaderCounter = 1;
                                 final Movie movie = response.body();
 
                                 if (!movie.getPoster().equals("N/A")) {
 
-                                    Picasso.get().load(movie.getPoster()).into(new Target() {
+                                    System.out.println("ON POSTER ABSENT");
+
+                                    target = new Target() {
                                         @Override
                                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
+                                            System.out.println("LOADED");
                                             movie.setImage(bitmap);
 
                                             moviesList.addLast(movie);
 
                                             if (isNeedViewUpdate) {
 
+                                                System.out.println("SENDING POST UPDATE POSTER");
                                                 movieCollectionViewModel.getMovie().postValue(moviesList.getFirst());
                                                 moviesList.removeFirst();
                                                 isNeedViewUpdate = false;
@@ -112,16 +124,21 @@ public class MovieLoader {
 
                                         @Override
                                         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                                            // TODO
-                                        }
 
+                                        }
 
                                         @Override
                                         public void onPrepareLoad(Drawable placeHolderDrawable) {
+
                                         }
-                                    });
+                                    };
+
+                                    Picasso.get().load(movie.getPoster()).into(target);
 
                                 } else {
+
+                                    System.out.println("ON POSTER N/A");
+
 
                                     // TODO DUPLICATE
                                     movie.setImage(null);
@@ -129,6 +146,7 @@ public class MovieLoader {
 
                                     if (isNeedViewUpdate) {
 
+                                        System.out.println("SENDING POST UPDATE NO POSTER");
                                         movieCollectionViewModel.getMovie().postValue(moviesList.getFirst());
                                         moviesList.removeFirst();
                                         isNeedViewUpdate = false;

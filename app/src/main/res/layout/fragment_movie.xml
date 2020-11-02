@@ -158,7 +158,8 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/abeezee"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/imdbText" />
+                        android:text="@string/imdbText"
+                        android:onClick="@{(view) -> MovieCollectionViewModel.onClick(view)}"/>
 
                 </LinearLayout>
 

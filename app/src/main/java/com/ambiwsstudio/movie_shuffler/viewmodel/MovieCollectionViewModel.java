@@ -1,5 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
+import android.view.View;
+
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.model.MovieLoader;
 import androidx.lifecycle.MutableLiveData;
@@ -16,6 +18,7 @@ public class MovieCollectionViewModel extends ViewModel {
     public MutableLiveData<String> actors = new MutableLiveData<>();
     public MutableLiveData<String> plot = new MutableLiveData<>();
     public MutableLiveData<String> imdbRating = new MutableLiveData<>();
+    private MutableLiveData<String> imdbProceedAccess;
     private MutableLiveData<Movie> movieMutableLiveData;
 
     public MutableLiveData<Movie> getMovie() {
@@ -24,6 +27,23 @@ public class MovieCollectionViewModel extends ViewModel {
             movieMutableLiveData = new MutableLiveData<>();
 
         return movieMutableLiveData;
+
+    }
+
+    public MutableLiveData<String> getImdbProceedAccess() {
+
+        if (imdbProceedAccess == null)
+            imdbProceedAccess = new MutableLiveData<>();
+
+        return imdbProceedAccess;
+
+    }
+
+    public void onClick(View view) {
+
+        if (movieMutableLiveData.getValue() != null)
+            imdbProceedAccess.setValue(movieMutableLiveData.getValue().getImdbID());
+        else imdbProceedAccess.setValue("N/A");
 
     }
 

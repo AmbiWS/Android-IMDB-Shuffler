@@ -1,7 +1,9 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
@@ -46,10 +49,8 @@ public class MovieFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_movie, container, false);
 
-        View view = binding.getRoot();
-        binding.setMovieCollectionViewModel(movieCollectionViewModel);
+        return binding.getRoot();
 
-        return view;
     }
 
     /*
@@ -73,7 +74,11 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
-        movieCollectionViewModel = ViewModelProviders.of(this).get(args.getString(ARG_TAG), MovieCollectionViewModel.class);
+        String key = ARG_TAG;
+        movieCollectionViewModel = ViewModelProviders.of(this).get(key, MovieCollectionViewModel.class);
+        binding.setLifecycleOwner(this);
+        binding.setMovieCollectionViewModel(movieCollectionViewModel);
+
         movieCollectionViewModel.getMovie().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
@@ -129,6 +134,27 @@ public class MovieFragment extends Fragment {
                 if (ARG_TAG.equals("0")) {
 
                     smoothScrollDown();
+
+                }
+
+            }
+        });
+
+        movieCollectionViewModel.getImdbProceedAccess().observe(this, new Observer<String>() {
+
+            String IMDB_BASE_URL = "https://www.imdb.com";
+
+            @Override
+            public void onChanged(String s) {
+
+                if (!s.equals("N/A")) {
+
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_BASE_URL + "/title/" + s));
+                    startActivity(browserIntent);
+
+                } else {
+
+                    Toast.makeText(getActivity(), "Sorry, something gone wrong...", Toast.LENGTH_SHORT).show();
 
                 }
 

@@ -15,7 +15,7 @@ public class MovieCollectionViewModel extends ViewModel {
     public MutableLiveData<String> director = new MutableLiveData<>();
     public MutableLiveData<String> actors = new MutableLiveData<>();
     public MutableLiveData<String> plot = new MutableLiveData<>();
-    public MutableLiveData<String> metascore = new MutableLiveData<>();
+    public MutableLiveData<String> imdbRating = new MutableLiveData<>();
     private MutableLiveData<Movie> movieMutableLiveData;
 
     public MutableLiveData<Movie> getMovie() {

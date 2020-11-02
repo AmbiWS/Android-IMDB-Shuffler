@@ -116,8 +116,8 @@ public class MovieFragment extends Fragment {
                     binding.textViewDirector.setText(String.format("Director: %s", movie.getDirector()));
                 else binding.textViewDirector.setVisibility(View.GONE);
 
-                if (!movie.getMetascore().equals("N/A"))
-                    binding.textViewScore.setText(String.format("Metascore: %s", movie.getMetascore()));
+                if (!movie.getImdbRating().equals("N/A"))
+                    binding.textViewScore.setText(String.format("IMDB Rating: %s", movie.getImdbRating()));
                 else binding.textViewScore.setVisibility(View.GONE);
 
                 if (ARG_TAG.equals("0")) {

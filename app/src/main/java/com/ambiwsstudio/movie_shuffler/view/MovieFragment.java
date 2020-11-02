@@ -37,6 +37,7 @@ public class MovieFragment extends Fragment {
     private MovieCollectionViewModel movieCollectionViewModel;
     FragmentMovieBinding binding;
     ScrollView scrollView;
+    private boolean isScrolled = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +58,7 @@ public class MovieFragment extends Fragment {
         TODO: autoscroll down
         TODO: Future fragments preloading
         TODO: Fragment redesign (Bg behind text, More data, Link to IMDB, etc...
+        TODO: FIX CLEAR FIRST PAGE
 
      */
 
@@ -129,8 +131,14 @@ public class MovieFragment extends Fragment {
 
     }
 
-
     void smoothScrollDown() {
+
+        if (isScrolled)
+            return;
+
+        System.out.println(binding.textViewTitle.getRootView().getBottom());
+        System.out.println();
+        // TODO RETURN IF NOTHING TO SCROLL
 
         scrollView.post(new Runnable() {
             @Override
@@ -145,6 +153,9 @@ public class MovieFragment extends Fragment {
                     }
 
                     public void onFinish() {
+
+                        isScrolled = true;
+
                     }
                 }.start();
 

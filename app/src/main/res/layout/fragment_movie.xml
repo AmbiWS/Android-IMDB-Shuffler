@@ -148,6 +148,18 @@
                         android:textColor="@color/colorTextDark"
                         android:text="@={MovieCollectionViewModel.imdbRating}" />
 
+                    <TextView
+                        android:id="@+id/imdbLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="12dp"
+                        android:fontFamily="@font/abeezee"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="@string/imdbText" />
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

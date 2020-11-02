@@ -120,6 +120,12 @@ public class MovieFragment extends Fragment {
                     binding.textViewScore.setText(String.format("IMDB Rating: %s", movie.getImdbRating()));
                 else binding.textViewScore.setVisibility(View.GONE);
 
+                if (!movie.getImdbID().equals("N/A"))
+                    binding.imdbLink.setText(R.string.imdbText);
+                else binding.imdbLink.setVisibility(View.GONE);
+
+                System.out.println(movie.getImdbID());
+
                 if (ARG_TAG.equals("0")) {
 
                     smoothScrollDown();
@@ -135,10 +141,6 @@ public class MovieFragment extends Fragment {
 
         if (isScrolled)
             return;
-
-        System.out.println(binding.textViewTitle.getRootView().getBottom());
-        System.out.println();
-        // TODO RETURN IF NOTHING TO SCROLL
 
         scrollView.post(new Runnable() {
             @Override

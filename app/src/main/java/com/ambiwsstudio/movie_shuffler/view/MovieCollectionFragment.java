@@ -35,7 +35,7 @@ public class MovieCollectionFragment extends Fragment {
         viewPager2 = view.findViewById(R.id.pager);
         viewPager2.setAdapter(adapter);
 
-        //viewPager2.setUserInputEnabled(false);
+        viewPager2.setUserInputEnabled(false);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

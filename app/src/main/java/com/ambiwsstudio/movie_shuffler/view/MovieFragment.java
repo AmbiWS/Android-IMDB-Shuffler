@@ -78,10 +78,13 @@ public class MovieFragment extends Fragment {
         movieCollectionViewModel = ViewModelProviders.of(this).get(key, MovieCollectionViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
+        binding.linearLayout.setVisibility(View.GONE);
 
         movieCollectionViewModel.getMovie().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
+
+                binding.linearLayout.setVisibility(View.VISIBLE);
 
                 if (movie.getImage() != null) {
 

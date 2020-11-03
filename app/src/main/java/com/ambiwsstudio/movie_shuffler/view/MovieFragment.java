@@ -45,12 +45,6 @@ public class MovieFragment extends Fragment {
 
     }
 
-    /*
-
-        TODO: OneSideScrolling
-
-     */
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
@@ -121,7 +115,7 @@ public class MovieFragment extends Fragment {
                 if (ARG_TAG.equals("0")) {
 
                     smoothScrollDown();
-                    allowSideScroll();
+                    allowSideScroll(true);
 
                 }
 
@@ -142,7 +136,24 @@ public class MovieFragment extends Fragment {
 
                 } else {
 
-                    Toast.makeText(getActivity(), "Sorry, something gone wrong...", Toast.LENGTH_SHORT).show();
+                    binding.imageViewPoster.setImageResource(R.drawable.error);
+                    binding.linearLayout.setVisibility(View.GONE);
+                    allowSideScroll(false);
+
+                }
+
+            }
+        });
+
+        movieViewModel.getErrorOccurred().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+                if (s.equals("Error")) {
+
+                    binding.imageViewPoster.setImageResource(R.drawable.error);
+                    binding.linearLayout.setVisibility(View.GONE);
+                    allowSideScroll(false);
 
                 }
 
@@ -151,7 +162,7 @@ public class MovieFragment extends Fragment {
 
     }
 
-    private void allowSideScroll() {
+    private void allowSideScroll(Boolean b) {
 
         MovieCollectionFragment.getInstance().viewPager2.setUserInputEnabled(true);
 

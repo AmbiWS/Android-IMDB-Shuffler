@@ -2,6 +2,7 @@ package com.ambiwsstudio.movie_shuffler.model;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.service.MovieService;
@@ -46,7 +47,12 @@ public class MovieLoader {
 
             if (loaderCounter > 10) {
 
-                // TODO
+                StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+
+                for (StackTraceElement e: ste)
+                    Log.i("MovieLoaderErrorTrace: ", e.getMethodName());
+
+                movieViewModel.getErrorOccurred().postValue("Error");
                 return;
 
             }
@@ -81,18 +87,7 @@ public class MovieLoader {
                                         @Override
                                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                                            movie.setImage(bitmap);
-
-                                            moviesList.addLast(movie);
-
-                                            if (isNeedViewUpdate) {
-
-                                                movieViewModel.getMovie().postValue(moviesList.getFirst());
-                                                moviesList.removeFirst();
-                                                isNeedViewUpdate = false;
-
-                                            }
-
+                                            setupMovie(movie, bitmap);
                                             sendRequest();
 
                                         }
@@ -100,11 +95,13 @@ public class MovieLoader {
                                         @Override
                                         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
+                                            e.printStackTrace();
+                                            movieViewModel.getErrorOccurred().postValue("Error");
+
                                         }
 
                                         @Override
                                         public void onPrepareLoad(Drawable placeHolderDrawable) {
-
                                         }
                                     };
 
@@ -112,18 +109,7 @@ public class MovieLoader {
 
                                 } else {
 
-                                    // TODO DUPLICATE
-                                    movie.setImage(null);
-                                    moviesList.addLast(movie);
-
-                                    if (isNeedViewUpdate) {
-
-                                        movieViewModel.getMovie().postValue(moviesList.getFirst());
-                                        moviesList.removeFirst();
-                                        isNeedViewUpdate = false;
-
-                                    }
-
+                                    setupMovie(movie, null);
                                     sendRequest();
 
                                 }
@@ -135,12 +121,26 @@ public class MovieLoader {
                         @Override
                         public void onFailure(Call<Movie> call, Throwable t) {
 
-                            // TODO
-                            movieViewModel.getErrorOccurred().postValue("Error");
                             t.printStackTrace();
+                            movieViewModel.getErrorOccurred().postValue("Error");
 
                         }
                     });
+
+        }
+
+    }
+
+    private void setupMovie(Movie movie, Bitmap image) {
+
+        movie.setImage(image);
+        moviesList.addLast(movie);
+
+        if (isNeedViewUpdate) {
+
+            movieViewModel.getMovie().postValue(moviesList.getFirst());
+            moviesList.removeFirst();
+            isNeedViewUpdate = false;
 
         }
 

@@ -11,11 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.ambiwsstudio.movie_shuffler.view.MovieActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
-        <activity android:name="com.ambiwsstudio.movie_shuffler.view.MainActivity">
+        <activity android:name="com.ambiwsstudio.movie_shuffler.view.MovieActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

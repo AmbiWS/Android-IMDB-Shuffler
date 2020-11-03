@@ -1,5 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
+import android.util.Log;
 import android.view.View;
 
 import com.ambiwsstudio.movie_shuffler.model.Movie;
@@ -19,6 +20,7 @@ public class MovieViewModel extends ViewModel {
     public MutableLiveData<String> plot = new MutableLiveData<>();
     public MutableLiveData<String> imdbRating = new MutableLiveData<>();
     private MutableLiveData<String> imdbProceedAccess;
+    private MutableLiveData<String> isErrorOccurred;
     private MutableLiveData<Movie> movieMutableLiveData;
 
     public MutableLiveData<Movie> getMovie() {
@@ -27,6 +29,15 @@ public class MovieViewModel extends ViewModel {
             movieMutableLiveData = new MutableLiveData<>();
 
         return movieMutableLiveData;
+
+    }
+
+    public MutableLiveData<String> getErrorOccurred() {
+
+        if (isErrorOccurred == null)
+            isErrorOccurred = new MutableLiveData<>();
+
+        return isErrorOccurred;
 
     }
 
@@ -41,15 +52,11 @@ public class MovieViewModel extends ViewModel {
 
     public void onClick(View view) {
 
+        Log.i("MovieViewModel", "Click event caught: " + view.toString());
+
         if (movieMutableLiveData.getValue() != null)
             imdbProceedAccess.setValue(movieMutableLiveData.getValue().getImdbID());
         else imdbProceedAccess.setValue("N/A");
-
-    }
-
-    public void allowSideScrolling() {
-
-
 
     }
 

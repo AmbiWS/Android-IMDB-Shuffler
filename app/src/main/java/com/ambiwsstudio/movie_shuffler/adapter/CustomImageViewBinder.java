@@ -1,5 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.adapter;
 
+import android.util.Log;
+
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
@@ -16,7 +18,7 @@ public class CustomImageViewBinder {
     @BindingAdapter(value = "linkAttrChanged")
     public static void setListener(CustomImageView customImageView, final InverseBindingListener linkAttrChanged) {
 
-        // TODO
+        Log.i("CustomImageViewBinder", "Change Caught: " + customImageView.toString() + ", " + linkAttrChanged.toString());
 
     }
 

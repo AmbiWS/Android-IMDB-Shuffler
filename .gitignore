@@ -55,3 +55,4 @@ obj/
 /gradlew.bat
 /app/.gitignore
 /gradle/
+/app/src/main/res/values/font_certs.xml

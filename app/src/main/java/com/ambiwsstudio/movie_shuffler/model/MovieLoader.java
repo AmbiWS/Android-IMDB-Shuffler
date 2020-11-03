@@ -22,7 +22,6 @@ public class MovieLoader {
     private int loaderCounter = 0;
     private int requestCounter = 0;
     private boolean isNeedViewUpdate = false;
-    private Movie currentMovie;
     private Target target;
     private ArrayDeque<Movie> moviesList = new ArrayDeque<>();
 
@@ -32,12 +31,6 @@ public class MovieLoader {
             instance = new MovieLoader();
 
         return instance;
-
-    }
-
-    public boolean isNeedViewUpdate() {
-
-        return isNeedViewUpdate;
 
     }
 
@@ -143,6 +136,7 @@ public class MovieLoader {
                         public void onFailure(Call<Movie> call, Throwable t) {
 
                             // TODO
+                            movieViewModel.getErrorOccurred().postValue("Error");
                             t.printStackTrace();
 
                         }

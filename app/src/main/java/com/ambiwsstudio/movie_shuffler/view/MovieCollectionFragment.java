@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,18 +17,16 @@ import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBinding;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
-import com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieCollectionFragment extends Fragment {
 
-    MovieCollectionPagerAdapter adapter;
+    private static MovieCollectionFragment instance;
+    private MovieCollectionPagerAdapter adapter;
+    private FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
-    private MovieCollectionViewModel movieCollectionViewModel;
-    FragmentMovieCollectionBinding binding;
-    static MovieCollectionFragment instance;
 
     static MovieCollectionFragment getInstance() {
 
@@ -42,7 +38,7 @@ public class MovieCollectionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(
@@ -55,8 +51,8 @@ public class MovieCollectionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        MovieCollectionViewModel movieCollectionViewModel = ViewModelProviders.of(this).get(MovieCollectionViewModel.class);
         instance = MovieCollectionFragment.this;
-        movieCollectionViewModel = ViewModelProviders.of(this).get(MovieCollectionViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
 
@@ -78,7 +74,7 @@ public class MovieCollectionFragment extends Fragment {
 
                 MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
                         .getSupportFragmentManager()
-                        .findFragmentByTag(String.valueOf("f" + position));
+                        .findFragmentByTag("f" + position);
 
                 if (fragment != null && position != 0)
                     fragment.smoothScrollDown();
@@ -87,16 +83,6 @@ public class MovieCollectionFragment extends Fragment {
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
-            }
-        });
-
-        movieCollectionViewModel.getAllowToScroll().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-
-                if (aBoolean)
-                    viewPager2.setUserInputEnabled(true);
-
             }
         });
 

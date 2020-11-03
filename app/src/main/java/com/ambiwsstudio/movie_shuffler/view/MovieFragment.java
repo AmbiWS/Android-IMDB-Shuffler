@@ -30,13 +30,12 @@ public class MovieFragment extends Fragment {
 
     public static String ARG_TAG = "tag";
 
-    private MovieViewModel movieViewModel;
-    FragmentMovieBinding binding;
-    ScrollView scrollView;
+    private FragmentMovieBinding binding;
+    private ScrollView scrollView;
     private boolean isScrolled = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(
@@ -49,10 +48,6 @@ public class MovieFragment extends Fragment {
     /*
 
         TODO: OneSideScrolling
-        TODO: autoscroll down
-        TODO: Future fragments preloading
-        TODO: Fragment redesign (Bg behind text, More data, Link to IMDB, etc...
-        TODO: FIX CLEAR FIRST PAGE
 
      */
 
@@ -60,18 +55,16 @@ public class MovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         Bundle args = getArguments();
-
         if (args != null)
             ARG_TAG = args.getString(ARG_TAG);
 
-        scrollView = (ScrollView) view.getRootView();
-        scrollView.setSmoothScrollingEnabled(true);
-
-        String key = ARG_TAG;
-        movieViewModel = ViewModelProviders.of(this).get(key, MovieViewModel.class);
+        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(ARG_TAG, MovieViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieViewModel(movieViewModel);
         binding.linearLayout.setVisibility(View.GONE);
+
+        scrollView = (ScrollView) view.getRootView();
+        scrollView.setSmoothScrollingEnabled(true);
 
         movieViewModel.getMovie().observe(this, new Observer<Movie>() {
             @Override
@@ -125,15 +118,12 @@ public class MovieFragment extends Fragment {
                     binding.imdbLink.setText(R.string.imdbText);
                 else binding.imdbLink.setVisibility(View.GONE);
 
-                System.out.println(ARG_TAG);
-
                 if (ARG_TAG.equals("0")) {
 
                     smoothScrollDown();
                     allowSideScroll();
 
                 }
-
 
             }
         });

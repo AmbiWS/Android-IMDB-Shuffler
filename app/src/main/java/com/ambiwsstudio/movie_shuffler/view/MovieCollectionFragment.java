@@ -18,6 +18,9 @@ import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBinding;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -71,6 +74,16 @@ public class MovieCollectionFragment extends Fragment {
             public void onPageSelected(int position) {
 
                 super.onPageSelected(position);
+
+                viewPager2.setUserInputEnabled(false);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+
+                        viewPager2.setUserInputEnabled(true);
+
+                    }
+                }, 1000);
 
                 MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
                         .getSupportFragmentManager()

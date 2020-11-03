@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
@@ -66,47 +66,18 @@ public class MovieFragment extends Fragment {
 
                 binding.linearLayout.setVisibility(View.VISIBLE);
 
-                if (movie.getImage() != null) {
-
+                if (movie.getImage() != null)
                     binding.imageViewPoster.setImageBitmap(movie.getImage());
+                else binding.imageViewPoster.setImageResource(R.drawable.postermissing);
 
-                } else {
-
-                    binding.imageViewPoster.setImageResource(R.drawable.postermissing);
-
-                }
-
-                if (!movie.getTitle().equals("N/A"))
-                    binding.textViewTitle.setText(movie.getTitle());
-                else binding.textViewTitle.setVisibility(View.GONE);
-
-                if (!movie.getYear().equals("N/A"))
-                    binding.textViewYear.setText(String.format("Year: %s", movie.getYear()));
-                else binding.textViewYear.setVisibility(View.GONE);
-
-                if (!movie.getRuntime().equals("N/A"))
-                    binding.textViewRuntime.setText(String.format("Runtime: %s", movie.getRuntime()));
-                else binding.textViewRuntime.setVisibility(View.GONE);
-
-                if (!movie.getActors().equals("N/A"))
-                    binding.textViewActors.setText(String.format("Actors: %s", movie.getActors()));
-                else binding.textViewActors.setVisibility(View.GONE);
-
-                if (!movie.getGenre().equals("N/A"))
-                    binding.textViewGenre.setText(String.format("Genre: %s", movie.getGenre()));
-                else binding.textViewGenre.setVisibility(View.GONE);
-
-                if (!movie.getPlot().equals("N/A"))
-                    binding.textViewPlot.setText(String.format("Plot: %s", movie.getPlot()));
-                else binding.textViewPlot.setVisibility(View.GONE);
-
-                if (!movie.getDirector().equals("N/A"))
-                    binding.textViewDirector.setText(String.format("Director: %s", movie.getDirector()));
-                else binding.textViewDirector.setVisibility(View.GONE);
-
-                if (!movie.getImdbRating().equals("N/A"))
-                    binding.textViewScore.setText(String.format("IMDB Rating: %s", movie.getImdbRating()));
-                else binding.textViewScore.setVisibility(View.GONE);
+                textViewSetup(movie.getTitle(), binding.textViewTitle, "%s");
+                textViewSetup(movie.getYear(), binding.textViewYear, "Year: %s");
+                textViewSetup(movie.getRuntime(), binding.textViewRuntime, "Runtime: %s");
+                textViewSetup(movie.getActors(), binding.textViewActors, "Actors: %s");
+                textViewSetup(movie.getGenre(), binding.textViewGenre, "Genre: %s");
+                textViewSetup(movie.getPlot(), binding.textViewPlot, "Plot: %s");
+                textViewSetup(movie.getDirector(), binding.textViewDirector, "Director: %s");
+                textViewSetup(movie.getImdbRating(), binding.textViewScore, "IMDB Rating: %s");
 
                 if (!movie.getImdbID().equals("N/A"))
                     binding.imdbLink.setText(R.string.imdbText);
@@ -134,13 +105,7 @@ public class MovieFragment extends Fragment {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_BASE_URL + "/title/" + s));
                     startActivity(browserIntent);
 
-                } else {
-
-                    binding.imageViewPoster.setImageResource(R.drawable.error);
-                    binding.linearLayout.setVisibility(View.GONE);
-                    allowSideScroll(false);
-
-                }
+                } else errorHandle();
 
             }
         });
@@ -149,22 +114,33 @@ public class MovieFragment extends Fragment {
             @Override
             public void onChanged(String s) {
 
-                if (s.equals("Error")) {
-
-                    binding.imageViewPoster.setImageResource(R.drawable.error);
-                    binding.linearLayout.setVisibility(View.GONE);
-                    allowSideScroll(false);
-
-                }
+                if (s.equals("Error"))
+                    errorHandle();
 
             }
         });
 
     }
 
+    private void textViewSetup(String data, TextView textView, String format) {
+
+        if (!data.equals("N/A"))
+            textView.setText(String.format(format, data));
+        else textView.setVisibility(View.GONE);
+
+    }
+
+    private void errorHandle() {
+
+        binding.imageViewPoster.setImageResource(R.drawable.error);
+        binding.linearLayout.setVisibility(View.GONE);
+        allowSideScroll(false);
+
+    }
+
     private void allowSideScroll(Boolean b) {
 
-        MovieCollectionFragment.getInstance().viewPager2.setUserInputEnabled(true);
+        MovieCollectionFragment.getInstance().viewPager2.setUserInputEnabled(b);
 
     }
 

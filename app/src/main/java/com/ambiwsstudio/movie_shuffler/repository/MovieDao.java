@@ -4,6 +4,7 @@ import com.ambiwsstudio.movie_shuffler.model.Movie;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -12,7 +13,7 @@ import androidx.room.Query;
 public interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    List<Movie> getAll();
+    LiveData<List<Movie>> getAll();
 
     @Insert
     void insertMovie(Movie movie);

@@ -12,7 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
 
     private static int pagesCount = 5;
-    private FragmentActivity fa;
+    private final FragmentActivity fa;
 
     public MovieCollectionPagerAdapter(FragmentActivity fa) {
         super(fa);

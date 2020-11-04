@@ -7,7 +7,7 @@ public class MovieService {
 
     private static final String BASE_URL = "https://movie-database-imdb-alternative.p.rapidapi.com";
     private static MovieService instance;
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     private MovieService() {
 

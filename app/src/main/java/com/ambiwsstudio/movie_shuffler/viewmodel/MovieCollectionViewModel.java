@@ -1,5 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -46,16 +47,13 @@ public class MovieCollectionViewModel extends AndroidViewModel {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void onSaveClick(View view) {
 
         Log.i("MovieCollectionVM", "SaveClick Caught: " + view.toString());
         ImageView imageView = (ImageView)view;
-        if (((ColorDrawable)imageView.getBackground()).getColor()
-                == ((ColorDrawable)getApplication().getResources().getDrawable(R.color.colorLightTrans)).getColor()) {
-
-            isMovieToWatch.setValue(true);
-
-        } else isMovieToWatch.setValue(false);
+        isMovieToWatch.setValue(((ColorDrawable) imageView.getBackground()).getColor()
+                == ((ColorDrawable) getApplication().getResources().getDrawable(R.color.colorLightTrans)).getColor());
 
     }
 

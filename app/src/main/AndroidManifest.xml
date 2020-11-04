@@ -12,14 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-
-        <activity android:name="com.ambiwsstudio.movie_shuffler.view.MovieActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        <activity android:name=".view.MovieListActivity"></activity>
+        <activity
+            android:name=".view.MovieActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

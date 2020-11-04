@@ -24,7 +24,7 @@ public class MovieLoader {
     private int requestCounter = 0;
     private boolean isNeedViewUpdate = false;
     private Target target;
-    private ArrayDeque<Movie> moviesList = new ArrayDeque<>();
+    private final ArrayDeque<Movie> moviesList = new ArrayDeque<>();
 
     public static MovieLoader getInstance() {
 

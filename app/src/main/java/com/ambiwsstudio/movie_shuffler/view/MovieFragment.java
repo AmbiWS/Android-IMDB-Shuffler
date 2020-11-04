@@ -62,43 +62,40 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
-        movieViewModel.getMovie().observe(this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie movie) {
+        movieViewModel.getMovie().observe(this, movie -> {
 
-                currentMovie = movie;
-                binding.linearLayout.setVisibility(View.VISIBLE);
+            currentMovie = movie;
+            binding.linearLayout.setVisibility(View.VISIBLE);
 
-                if (movie.getImage() != null)
-                    binding.imageViewPoster.setImageBitmap(movie.getImage());
-                else binding.imageViewPoster.setImageResource(R.drawable.postermissing);
+            if (movie.getImage() != null)
+                binding.imageViewPoster.setImageBitmap(movie.getImage());
+            else binding.imageViewPoster.setImageResource(R.drawable.postermissing);
 
-                textViewSetup(movie.getTitle(), binding.textViewTitle, "%s");
-                textViewSetup(movie.getYear(), binding.textViewYear, "Year: %s");
-                textViewSetup(movie.getRuntime(), binding.textViewRuntime, "Runtime: %s");
-                textViewSetup(movie.getActors(), binding.textViewActors, "Actors: %s");
-                textViewSetup(movie.getGenre(), binding.textViewGenre, "Genre: %s");
-                textViewSetup(movie.getPlot(), binding.textViewPlot, "Plot: %s");
-                textViewSetup(movie.getDirector(), binding.textViewDirector, "Director: %s");
-                textViewSetup(movie.getImdbRating(), binding.textViewScore, "IMDB Rating: %s");
+            textViewSetup(movie.getTitle(), binding.textViewTitle, "%s");
+            textViewSetup(movie.getYear(), binding.textViewYear, "Year: %s");
+            textViewSetup(movie.getRuntime(), binding.textViewRuntime, "Runtime: %s");
+            textViewSetup(movie.getActors(), binding.textViewActors, "Actors: %s");
+            textViewSetup(movie.getGenre(), binding.textViewGenre, "Genre: %s");
+            textViewSetup(movie.getPlot(), binding.textViewPlot, "Plot: %s");
+            textViewSetup(movie.getDirector(), binding.textViewDirector, "Director: %s");
+            textViewSetup(movie.getImdbRating(), binding.textViewScore, "IMDB Rating: %s");
 
-                if (!movie.getImdbID().equals("N/A"))
-                    binding.imdbLink.setText(R.string.imdbText);
-                else binding.imdbLink.setVisibility(View.GONE);
+            if (!movie.getImdbID().equals("N/A"))
+                binding.imdbLink.setText(R.string.imdbText);
+            else binding.imdbLink.setVisibility(View.GONE);
 
-                if (ARG_TAG.equals("0")) {
+            if (ARG_TAG.equals("0")) {
 
-                    smoothScrollDown();
-                    initPageActions(true);
-
-                }
+                smoothScrollDown();
+                initPageActions(true);
 
             }
+
         });
 
         movieViewModel.getImdbProceedAccess().observe(this, new Observer<String>() {
 
-            String IMDB_BASE_URL = "https://www.imdb.com";
+            final String IMDB_BASE_URL = "https://www.imdb.com";
 
             @Override
             public void onChanged(String s) {
@@ -113,14 +110,11 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        movieViewModel.getErrorOccurred().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
+        movieViewModel.getErrorOccurred().observe(this, s -> {
 
-                if (s.equals("Error"))
-                    errorHandle();
+            if (s.equals("Error"))
+                errorHandle();
 
-            }
         });
 
     }
@@ -154,27 +148,20 @@ public class MovieFragment extends Fragment {
         if (isScrolled)
             return;
 
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
+        scrollView.post(() -> new CountDownTimer(1500, 20) {
 
-                new CountDownTimer(1500, 20) {
+            public void onTick(long millisUntilFinished) {
 
-                    public void onTick(long millisUntilFinished) {
-
-                        scrollView.scrollTo(0, (int)(binding.textViewTitle.getRootView().getBottom() - millisUntilFinished));
-
-                    }
-
-                    public void onFinish() {
-
-                        isScrolled = true;
-
-                    }
-                }.start();
+                scrollView.scrollTo(0, (int)(binding.textViewTitle.getRootView().getBottom() - millisUntilFinished));
 
             }
-        });
+
+            public void onFinish() {
+
+                isScrolled = true;
+
+            }
+        }.start());
 
     }
 }

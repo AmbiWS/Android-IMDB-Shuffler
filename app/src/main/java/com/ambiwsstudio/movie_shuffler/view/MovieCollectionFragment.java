@@ -1,6 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -8,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -57,6 +57,7 @@ public class MovieCollectionFragment extends Fragment {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
@@ -114,80 +115,74 @@ public class MovieCollectionFragment extends Fragment {
             }
         });
 
-        movieCollectionViewModel.getIsAccessedToList().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
+        movieCollectionViewModel.getIsAccessedToList().observe(this, aBoolean -> {
 
-                System.out.println(aBoolean);
+            Intent intent = new Intent(getContext(), MovieListActivity.class);
+            startActivity(intent);
 
-            }
         });
 
-        movieCollectionViewModel.getIsMovieToWatch().observe(this, new Observer<Boolean>() {
-            @SuppressLint("StaticFieldLeak")
-            @Override
-            public void onChanged(Boolean aBoolean) {
+        movieCollectionViewModel.getIsMovieToWatch().observe(this, aBoolean -> {
 
-                MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
-                        .getSupportFragmentManager()
-                        .findFragmentByTag("f" + currentFragmentPos);
+            MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
+                    .getSupportFragmentManager()
+                    .findFragmentByTag("f" + currentFragmentPos);
 
-                if (fragment != null) {
+            if (fragment != null) {
 
-                    currentMovie = fragment.currentMovie;
+                currentMovie = fragment.currentMovie;
 
-                    if (aBoolean) {
+                if (aBoolean) {
 
-                        fragment.isMovieToWatch = true;
-                        int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
-                        currentMovie.setImdbIdClear(id);
+                    fragment.isMovieToWatch = true;
+                    int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
+                    currentMovie.setImdbIdClear(id);
 
-                        new AsyncTask<Void, Void, Void> () {
+                    new AsyncTask<Void, Void, Void> () {
 
-                            @Override
-                            protected Void doInBackground(Void... voids) {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
 
-                                if (MovieCollectionFragment.this.getActivity() != null)
-                                    ((MovieActivity) MovieCollectionFragment.this.getActivity())
-                                            .getRoomInstance()
-                                            .movieDao()
-                                            .insertMovie(currentMovie);
+                            if (MovieCollectionFragment.this.getActivity() != null)
+                                ((MovieActivity) MovieCollectionFragment.this.getActivity())
+                                        .getRoomInstance()
+                                        .movieDao()
+                                        .insertMovie(currentMovie);
 
-                                return null;
-                            }
+                            return null;
+                        }
 
-                        }.execute();
+                    }.execute();
 
-                        binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+                    binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
-                    } else {
+                } else {
 
-                        fragment.isMovieToWatch = false;
+                    fragment.isMovieToWatch = false;
 
-                        new AsyncTask<Void, Void, Void> () {
+                    new AsyncTask<Void, Void, Void> () {
 
-                            @Override
-                            protected Void doInBackground(Void... voids) {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
 
-                                int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
-                                if (MovieCollectionFragment.this.getActivity() != null)
-                                    ((MovieActivity) MovieCollectionFragment.this.getActivity())
-                                            .getRoomInstance()
-                                            .movieDao()
-                                            .deleteMovieById(id);
+                            int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
+                            if (MovieCollectionFragment.this.getActivity() != null)
+                                ((MovieActivity) MovieCollectionFragment.this.getActivity())
+                                        .getRoomInstance()
+                                        .movieDao()
+                                        .deleteMovieById(id);
 
-                                return null;
-                            }
+                            return null;
+                        }
 
-                        }.execute();
+                    }.execute();
 
-                        binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
-
-                    }
+                    binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
 
                 }
 
             }
+
         });
 
     }

@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -20,9 +21,11 @@ public class Movie {
     @SerializedName("Year")
     @Expose
     private String year;
+    @Ignore
     @SerializedName("Rated")
     @Expose
     private String rated;
+    @Ignore
     @SerializedName("Released")
     @Expose
     private String released;
@@ -38,6 +41,7 @@ public class Movie {
     @SerializedName("Director")
     @Expose
     private String director;
+    @Ignore
     @SerializedName("Writer")
     @Expose
     private String writer;
@@ -49,12 +53,15 @@ public class Movie {
     @SerializedName("Plot")
     @Expose
     private String plot;
+    @Ignore
     @SerializedName("Language")
     @Expose
     private String language;
+    @Ignore
     @SerializedName("Country")
     @Expose
     private String country;
+    @Ignore
     @SerializedName("Awards")
     @Expose
     private String awards;
@@ -62,6 +69,7 @@ public class Movie {
     @SerializedName("Poster")
     @Expose
     private String poster;
+    @Ignore
     @SerializedName("Metascore")
     @Expose
     private String metascore;
@@ -69,27 +77,35 @@ public class Movie {
     @SerializedName("imdbRating")
     @Expose
     private String imdbRating;
+    @Ignore
     @SerializedName("imdbVotes")
     @Expose
     private String imdbVotes;
+    @Ignore
     @SerializedName("imdbID")
     @Expose
     private String imdbID;
+    @Ignore
     @SerializedName("Type")
     @Expose
     private String type;
+    @Ignore
     @SerializedName("DVD")
     @Expose
     private String dVD;
+    @Ignore
     @SerializedName("BoxOffice")
     @Expose
     private String boxOffice;
+    @Ignore
     @SerializedName("Production")
     @Expose
     private String production;
+    @Ignore
     @SerializedName("Website")
     @Expose
     private String website;
+    @Ignore
     @SerializedName("Response")
     @Expose
     private String response;
@@ -98,13 +114,14 @@ public class Movie {
     @PrimaryKey
     private int imdbIdClear;
 
+    @Ignore
     private Bitmap image;
 
     public void setImdbIdClear(int imdbIdClear) {
         this.imdbIdClear = imdbIdClear;
     }
 
-    int getImdbIdClear() {
+    public int getImdbIdClear() {
         return imdbIdClear;
     }
 
@@ -116,7 +133,7 @@ public class Movie {
         return response;
     }
 
-    String getPoster() {
+    public String getPoster() {
         return poster;
     }
 

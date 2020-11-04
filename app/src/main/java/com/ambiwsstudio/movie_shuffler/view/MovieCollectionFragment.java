@@ -1,5 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class MovieCollectionFragment extends Fragment {
     private MovieCollectionPagerAdapter adapter;
     private FragmentMovieCollectionBinding binding;
     private static int currentFragmentPos = 0;
+    private Movie currentMovie;
     ViewPager2 viewPager2;
 
     static MovieCollectionFragment getInstance() {
@@ -121,6 +124,7 @@ public class MovieCollectionFragment extends Fragment {
         });
 
         movieCollectionViewModel.getIsMovieToWatch().observe(this, new Observer<Boolean>() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onChanged(Boolean aBoolean) {
 
@@ -130,24 +134,53 @@ public class MovieCollectionFragment extends Fragment {
 
                 if (fragment != null) {
 
+                    currentMovie = fragment.currentMovie;
+
                     if (aBoolean) {
 
                         fragment.isMovieToWatch = true;
+                        int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
+                        currentMovie.setImdbIdClear(id);
 
-                        Movie movie = fragment.currentMovie;
-                        int id = Integer.parseInt(movie.getImdbID().substring(2));
-                        movie.setImdbIdClear(id);
+                        new AsyncTask<Void, Void, Void> () {
 
-                        ((MovieActivity)MovieCollectionFragment.this.getActivity())
-                                .getRoomInstance()
-                                .movieDao()
-                                .insertMovie(movie);
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+
+                                if (MovieCollectionFragment.this.getActivity() != null)
+                                    ((MovieActivity) MovieCollectionFragment.this.getActivity())
+                                            .getRoomInstance()
+                                            .movieDao()
+                                            .insertMovie(currentMovie);
+
+                                return null;
+                            }
+
+                        }.execute();
 
                         binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
                     } else {
 
                         fragment.isMovieToWatch = false;
+
+                        new AsyncTask<Void, Void, Void> () {
+
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+
+                                int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
+                                if (MovieCollectionFragment.this.getActivity() != null)
+                                    ((MovieActivity) MovieCollectionFragment.this.getActivity())
+                                            .getRoomInstance()
+                                            .movieDao()
+                                            .deleteMovieById(id);
+
+                                return null;
+                            }
+
+                        }.execute();
+
                         binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
 
                     }

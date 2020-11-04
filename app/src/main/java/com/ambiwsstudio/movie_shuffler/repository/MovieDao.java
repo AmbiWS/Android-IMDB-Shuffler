@@ -4,9 +4,11 @@ import com.ambiwsstudio.movie_shuffler.model.Movie;
 
 import java.util.List;
 
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+@Dao
 public interface MovieDao {
 
     @Query("SELECT * FROM movie")

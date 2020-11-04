@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.Entity;
+
+@Entity
 public class Movie {
 
     @SerializedName("Title")
@@ -80,7 +83,17 @@ public class Movie {
     @Expose
     private String response;
 
+    private String imdbIdClear;
+
     private Bitmap image;
+
+    void setImdbIdClear(String imdbIdClear) {
+        this.imdbIdClear = imdbIdClear;
+    }
+
+    String getImdbIdClear() {
+        return imdbIdClear;
+    }
 
     void setImage(Bitmap image) {
         this.image = image;

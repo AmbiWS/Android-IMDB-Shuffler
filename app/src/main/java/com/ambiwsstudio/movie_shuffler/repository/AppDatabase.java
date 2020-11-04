@@ -11,9 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Movie.class}, version = 1, exportSchema = false)
+@Database(entities = {Movie.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MovieDao movieDao();
@@ -32,7 +33,9 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
 
                     instance = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "aws-itvs-db").build();
+                            AppDatabase.class, "aws-itvs-db")
+                            .fallbackToDestructiveMigration()
+                            .build();
 
                 }
 
@@ -43,14 +46,5 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
 
     }
-
-    private static RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
-
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-        }
-
-    };
 
 }

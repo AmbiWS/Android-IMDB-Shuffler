@@ -135,8 +135,7 @@ public class MovieCollectionFragment extends Fragment {
                 if (aBoolean) {
 
                     fragment.isMovieToWatch = true;
-                    int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
-                    currentMovie.setImdbIdClear(id);
+                    currentMovie.setImdbIdClear(currentMovie.getImdbID().substring(2));
 
                     new AsyncTask<Void, Void, Void> () {
 

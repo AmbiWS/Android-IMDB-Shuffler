@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -110,18 +111,19 @@ public class Movie {
     @Expose
     private String response;
 
+    @NonNull
     @ColumnInfo(name = "id")
     @PrimaryKey
-    private int imdbIdClear;
+    private String imdbIdClear = "0000001";
 
     @Ignore
     private Bitmap image;
 
-    public void setImdbIdClear(int imdbIdClear) {
+    public void setImdbIdClear(@NonNull String imdbIdClear) {
         this.imdbIdClear = imdbIdClear;
     }
 
-    public int getImdbIdClear() {
+    public @NonNull String getImdbIdClear() {
         return imdbIdClear;
     }
 

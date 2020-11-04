@@ -24,7 +24,7 @@ public class MovieListAdapter extends ListAdapter<Movie, MovieViewHolder> {
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
 
         Movie current = getItem(position);
-        holder.bind(current.getTitle() + "\n" + current.getYear());
+        holder.bind(current.getTitle() + "\n" + current.getYear(), "tt" + current.getImdbIdClear());
 
     }
 
@@ -37,7 +37,8 @@ public class MovieListAdapter extends ListAdapter<Movie, MovieViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
-            return oldItem.getTitle().equals(newItem.getTitle());
+            return oldItem.getTitle().equals(newItem.getTitle())
+                    || oldItem.getImdbID().equals(newItem.getImdbID());
         }
 
     }

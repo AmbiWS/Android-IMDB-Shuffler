@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -29,6 +30,7 @@ public class MovieCollectionFragment extends Fragment {
     private static MovieCollectionFragment instance;
     private MovieCollectionPagerAdapter adapter;
     private FragmentMovieCollectionBinding binding;
+    private static int currentFragmentPos = 0;
     ViewPager2 viewPager2;
 
     static MovieCollectionFragment getInstance() {
@@ -75,6 +77,7 @@ public class MovieCollectionFragment extends Fragment {
 
                 super.onPageSelected(position);
 
+                currentFragmentPos = position;
                 viewPager2.setUserInputEnabled(false);
                 new Timer().schedule(new TimerTask() {
                     @Override
@@ -89,13 +92,57 @@ public class MovieCollectionFragment extends Fragment {
                         .getSupportFragmentManager()
                         .findFragmentByTag("f" + position);
 
-                if (fragment != null && position != 0)
-                    fragment.smoothScrollDown();
+                if (fragment != null) {
+
+                    if (fragment.isMovieToWatch)
+                        binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+                    else binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+
+                    if (position != 0)
+                        fragment.smoothScrollDown();
+
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
+            }
+        });
+
+        movieCollectionViewModel.getIsAccessedToList().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                System.out.println(aBoolean);
+
+            }
+        });
+
+        movieCollectionViewModel.getIsMovieToWatch().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentByTag("f" + currentFragmentPos);
+
+                if (fragment != null) {
+
+                    if (aBoolean) {
+
+                        fragment.isMovieToWatch = true;
+                        binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+
+                    } else {
+
+                        fragment.isMovieToWatch = false;
+                        binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+
+                    }
+
+                }
+
             }
         });
 

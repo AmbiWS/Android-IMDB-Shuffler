@@ -33,6 +33,7 @@ public class MovieFragment extends Fragment {
     private FragmentMovieBinding binding;
     private ScrollView scrollView;
     private boolean isScrolled = false;
+    boolean isMovieToWatch = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

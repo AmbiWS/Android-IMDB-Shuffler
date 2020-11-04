@@ -31,10 +31,10 @@ import java.util.TimerTask;
 public class MovieCollectionFragment extends Fragment {
 
     private static MovieCollectionFragment instance;
-    private MovieCollectionPagerAdapter adapter;
-    private FragmentMovieCollectionBinding binding;
     private static int currentFragmentPos = 0;
+    private MovieCollectionPagerAdapter adapter;
     private Movie currentMovie;
+    FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
 
     static MovieCollectionFragment getInstance() {

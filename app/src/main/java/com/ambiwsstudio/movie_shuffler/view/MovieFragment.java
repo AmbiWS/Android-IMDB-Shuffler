@@ -89,7 +89,7 @@ public class MovieFragment extends Fragment {
                 if (ARG_TAG.equals("0")) {
 
                     smoothScrollDown();
-                    allowSideScroll(true);
+                    initPageActions(true);
 
                 }
 
@@ -137,13 +137,15 @@ public class MovieFragment extends Fragment {
 
         binding.imageViewPoster.setImageResource(R.drawable.error);
         binding.linearLayout.setVisibility(View.GONE);
-        allowSideScroll(false);
+        initPageActions(false);
 
     }
 
-    private void allowSideScroll(Boolean b) {
+    private void initPageActions(Boolean b) {
 
         MovieCollectionFragment.getInstance().viewPager2.setUserInputEnabled(b);
+        MovieCollectionFragment.getInstance().binding.listImageView.setVisibility(View.VISIBLE);
+        MovieCollectionFragment.getInstance().binding.checkImageView.setVisibility(View.VISIBLE);
 
     }
 

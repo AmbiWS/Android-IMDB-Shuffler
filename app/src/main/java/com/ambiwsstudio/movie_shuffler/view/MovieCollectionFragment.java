@@ -138,6 +138,11 @@ public class MovieCollectionFragment extends Fragment {
                         int id = Integer.parseInt(movie.getImdbID().substring(2));
                         movie.setImdbIdClear(id);
 
+                        ((MovieActivity)MovieCollectionFragment.this.getActivity())
+                                .getRoomInstance()
+                                .movieDao()
+                                .insertMovie(movie);
+
                         binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
                     } else {

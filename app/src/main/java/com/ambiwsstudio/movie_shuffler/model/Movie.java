@@ -94,6 +94,7 @@ public class Movie {
     @Expose
     private String response;
 
+    @ColumnInfo(name = "id")
     @PrimaryKey
     private int imdbIdClear;
 

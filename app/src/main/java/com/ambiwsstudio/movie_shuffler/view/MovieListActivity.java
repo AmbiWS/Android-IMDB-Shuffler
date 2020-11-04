@@ -3,9 +3,12 @@ package com.ambiwsstudio.movie_shuffler.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import com.ambiwsstudio.movie_shuffler.R;
+import com.ambiwsstudio.movie_shuffler.adapter.MovieListAdapter;
 import com.ambiwsstudio.movie_shuffler.databinding.ActivityMovieListBinding;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieListViewModel;
 
@@ -22,11 +25,11 @@ public class MovieListActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setMovieListViewModel(movieListViewModel);
 
-        binding.moviesToWatchRecyclerView.setOnClickListener(v -> {
-
-
-
-        });
+        // TODO MB SWAP WITH BINDER
+        RecyclerView recyclerView = findViewById(R.id.moviesToWatchRecyclerView);
+        final MovieListAdapter adapter = new MovieListAdapter(new MovieListAdapter.MovieDiff());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 }

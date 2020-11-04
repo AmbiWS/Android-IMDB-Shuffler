@@ -13,7 +13,7 @@ public class MovieRepository {
     private MovieDao dao;
     private LiveData<List<Movie>> observableMovies;
 
-    MovieRepository(Application application) {
+    public MovieRepository(Application application) {
 
         AppDatabase database = AppDatabase.getInstance(application);
         dao = database.movieDao();
@@ -21,13 +21,13 @@ public class MovieRepository {
 
     }
 
-    LiveData<List<Movie>> getObservableMovies() {
+    public LiveData<List<Movie>> getObservableMovies() {
 
         return observableMovies;
 
     }
 
-    void insertMovie(final Movie movie) {
+    public void insertMovie(final Movie movie) {
 
         AppDatabase.databaseWriteExecutor.execute(() -> {
             dao.insertMovie(movie);
@@ -35,6 +35,12 @@ public class MovieRepository {
 
     }
 
+    public void deleteMovieById(int id) {
 
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            dao.deleteMovieById(id);
+        });
+
+    }
 
 }

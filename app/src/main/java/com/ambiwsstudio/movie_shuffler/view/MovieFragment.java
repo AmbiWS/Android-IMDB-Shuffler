@@ -34,6 +34,7 @@ public class MovieFragment extends Fragment {
     private ScrollView scrollView;
     private boolean isScrolled = false;
     boolean isMovieToWatch = false;
+    Movie currentMovie;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -65,6 +66,7 @@ public class MovieFragment extends Fragment {
             @Override
             public void onChanged(Movie movie) {
 
+                currentMovie = movie;
                 binding.linearLayout.setVisibility(View.VISIBLE);
 
                 if (movie.getImage() != null)

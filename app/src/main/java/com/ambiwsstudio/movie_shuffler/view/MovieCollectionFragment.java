@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBinding;
+import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 
 import java.util.Timer;
@@ -132,6 +133,11 @@ public class MovieCollectionFragment extends Fragment {
                     if (aBoolean) {
 
                         fragment.isMovieToWatch = true;
+
+                        Movie movie = fragment.currentMovie;
+                        int id = Integer.parseInt(movie.getImdbID().substring(2));
+                        movie.setImdbIdClear(id);
+
                         binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
                     } else {

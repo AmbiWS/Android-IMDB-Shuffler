@@ -5,14 +5,18 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity
 public class Movie {
 
+    @ColumnInfo(name = "title")
     @SerializedName("Title")
     @Expose
     private String title;
+    @ColumnInfo(name = "year")
     @SerializedName("Year")
     @Expose
     private String year;
@@ -22,21 +26,26 @@ public class Movie {
     @SerializedName("Released")
     @Expose
     private String released;
+    @ColumnInfo(name = "runtime")
     @SerializedName("Runtime")
     @Expose
     private String runtime;
+    @ColumnInfo(name = "genre")
     @SerializedName("Genre")
     @Expose
     private String genre;
+    @ColumnInfo(name = "director")
     @SerializedName("Director")
     @Expose
     private String director;
     @SerializedName("Writer")
     @Expose
     private String writer;
+    @ColumnInfo(name = "actors")
     @SerializedName("Actors")
     @Expose
     private String actors;
+    @ColumnInfo(name = "plot")
     @SerializedName("Plot")
     @Expose
     private String plot;
@@ -49,12 +58,14 @@ public class Movie {
     @SerializedName("Awards")
     @Expose
     private String awards;
+    @ColumnInfo(name = "poster")
     @SerializedName("Poster")
     @Expose
     private String poster;
     @SerializedName("Metascore")
     @Expose
     private String metascore;
+    @ColumnInfo(name = "imdb_rating")
     @SerializedName("imdbRating")
     @Expose
     private String imdbRating;
@@ -83,15 +94,16 @@ public class Movie {
     @Expose
     private String response;
 
-    private String imdbIdClear;
+    @PrimaryKey
+    private int imdbIdClear;
 
     private Bitmap image;
 
-    void setImdbIdClear(String imdbIdClear) {
+    public void setImdbIdClear(int imdbIdClear) {
         this.imdbIdClear = imdbIdClear;
     }
 
-    String getImdbIdClear() {
+    int getImdbIdClear() {
         return imdbIdClear;
     }
 

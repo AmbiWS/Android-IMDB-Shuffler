@@ -15,38 +15,50 @@ public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
     private final FragmentActivity fa;
 
     public MovieCollectionPagerAdapter(FragmentActivity fa) {
+
         super(fa);
         this.fa = fa;
+
     }
 
     public FragmentActivity getFragmentActivity() {
+
         return fa;
+
     }
 
     @Override
     public long getItemId(int position) {
+
         return super.getItemId(position);
+
     }
 
     @Override
     public boolean containsItem(long itemId) {
+
         return super.containsItem(itemId);
+
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+
         pagesCount++;
         Fragment fragment = new MovieFragment();
         Bundle args = new Bundle();
         args.putString(MovieFragment.ARG_TAG, String.valueOf(position));
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Override
     public int getItemCount() {
+
         return pagesCount;
+
     }
 
 }

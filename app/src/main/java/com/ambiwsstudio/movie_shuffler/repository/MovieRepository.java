@@ -10,8 +10,8 @@ import androidx.lifecycle.LiveData;
 
 public class MovieRepository {
 
-    private MovieDao dao;
-    private LiveData<List<Movie>> observableMovies;
+    private final MovieDao dao;
+    private final LiveData<List<Movie>> observableMovies;
 
     public MovieRepository(Application application) {
 
@@ -29,17 +29,13 @@ public class MovieRepository {
 
     public void insertMovie(final Movie movie) {
 
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            dao.insertMovie(movie);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() -> dao.insertMovie(movie));
 
     }
 
     public void deleteMovieById(int id) {
 
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            dao.deleteMovieById(id);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() -> dao.deleteMovieById(id));
 
     }
 

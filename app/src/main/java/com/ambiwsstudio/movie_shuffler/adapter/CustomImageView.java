@@ -11,23 +11,33 @@ public class CustomImageView extends androidx.appcompat.widget.AppCompatImageVie
     private String link;
 
     public String getLink() {
+
         return this.link;
+
     }
 
     public void setLink(String link) {
+
         this.link = link;
+
     }
 
     public CustomImageView(@NonNull Context context) {
+
         super(context);
+
     }
 
     public CustomImageView(@NonNull Context context, @Nullable AttributeSet attrs) {
+
         super(context, attrs);
+
     }
 
     public CustomImageView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+
         super(context, attrs, defStyleAttr);
+
     }
 
 }

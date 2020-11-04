@@ -23,9 +23,6 @@ import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MovieFragment extends Fragment {
 
     public static String ARG_TAG = "tag";

@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.ListAdapter;
 public class MovieListAdapter extends ListAdapter<Movie, MovieViewHolder> {
 
     public MovieListAdapter(@NonNull DiffUtil.ItemCallback<Movie> diffCallback) {
+
         super(diffCallback);
+
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         return MovieViewHolder.create(parent);
+
     }
 
     @Override
@@ -32,13 +36,17 @@ public class MovieListAdapter extends ListAdapter<Movie, MovieViewHolder> {
 
         @Override
         public boolean areItemsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+
             return oldItem == newItem;
+
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+
             return oldItem.getTitle().equals(newItem.getTitle())
                     || oldItem.getImdbID().equals(newItem.getImdbID());
+
         }
 
     }

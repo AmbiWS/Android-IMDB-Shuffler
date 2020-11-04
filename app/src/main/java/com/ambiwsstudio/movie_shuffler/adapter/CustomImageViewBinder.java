@@ -24,13 +24,17 @@ public class CustomImageViewBinder {
 
     @BindingAdapter("link")
     public static void setLink(CustomImageView view, String value) {
+
         if (value != null && !value.equals(view.getLink()))
             view.setLink(value);
+
     }
 
     @InverseBindingAdapter(attribute = "link")
     public static String getLink(CustomImageView customImageView) {
+
         return customImageView.getLink();
+
     }
 
 }

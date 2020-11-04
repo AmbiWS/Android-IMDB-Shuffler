@@ -31,10 +31,4 @@ public class MovieListViewModel extends AndroidViewModel {
 
     }
 
-    public void insertMovie(Movie movie) {
-
-        repository.insertMovie(movie);
-
-    }
-
 }

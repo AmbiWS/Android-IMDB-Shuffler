@@ -25,9 +25,6 @@ import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MovieCollectionFragment extends Fragment {
 
     private static MovieCollectionFragment instance;

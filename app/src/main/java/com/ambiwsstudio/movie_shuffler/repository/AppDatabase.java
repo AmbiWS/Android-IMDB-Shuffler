@@ -7,12 +7,9 @@ import com.ambiwsstudio.movie_shuffler.model.Movie;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Movie.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

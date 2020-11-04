@@ -31,7 +31,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/link"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="ContentDescription,RtlSymmetry" />
 
         <TextView
             android:id="@+id/textView"
@@ -40,7 +40,7 @@
             android:maxWidth="290dp"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
-            android:text="Test\nA"
+            android:text=""
             android:textColor="@color/colorTextDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

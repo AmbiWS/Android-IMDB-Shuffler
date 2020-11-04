@@ -7,9 +7,11 @@ import com.ambiwsstudio.movie_shuffler.model.Movie;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -41,5 +43,14 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
 
     }
+
+    private static RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
+
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+        }
+
+    };
 
 }

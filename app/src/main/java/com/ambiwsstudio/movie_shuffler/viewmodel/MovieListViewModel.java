@@ -25,7 +25,7 @@ public class MovieListViewModel extends AndroidViewModel {
 
     }
 
-    LiveData<List<Movie>> getObservableMovies() {
+    public LiveData<List<Movie>> getObservableMovies() {
 
         return observableMovies;
 

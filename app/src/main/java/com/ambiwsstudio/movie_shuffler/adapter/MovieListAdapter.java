@@ -24,7 +24,7 @@ public class MovieListAdapter extends ListAdapter<Movie, MovieViewHolder> {
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
 
         Movie current = getItem(position);
-        holder.bind(current.getTitle());
+        holder.bind(current.getTitle() + "\n" + current.getYear());
 
     }
 

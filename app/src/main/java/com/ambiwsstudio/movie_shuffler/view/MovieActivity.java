@@ -13,6 +13,8 @@ public class MovieActivity extends AppCompatActivity {
 
     private AppDatabase instance;
 
+    //TODO ADAPTIVE RECHECK
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);

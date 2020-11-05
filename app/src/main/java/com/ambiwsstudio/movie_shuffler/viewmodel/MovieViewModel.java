@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.model.MovieLoader;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
 
 import androidx.lifecycle.MutableLiveData;
@@ -24,7 +23,7 @@ public class MovieViewModel extends ViewModel {
     private MutableLiveData<String> imdbProceedAccess;
     private MutableLiveData<String> isErrorOccurred;
     private MutableLiveData<Movie> movieMutableLiveData;
-    private MovieRepositoryAPI repositoryAPI;
+    private final MovieRepositoryAPI repositoryAPI;
 
     public MutableLiveData<Movie> getMovie() {
 
@@ -65,8 +64,18 @@ public class MovieViewModel extends ViewModel {
 
     public MovieViewModel() {
 
-        repositoryAPI = new MovieRepositoryAPI();
-        movieMutableLiveData.postValue(repositoryAPI.getFirstMovieInQueue());
+        repositoryAPI = MovieRepositoryAPI.getInstance();
+
+        new Thread() {
+
+            public void run() {
+
+                movieMutableLiveData.postValue(repositoryAPI.getFirstMovieInQueue());
+
+            }
+
+        }.start();
+
         /*MovieLoader.getInstance().isNeedViewUpdate(true);
         MovieLoader.getInstance().loadMovie(this, 1);*/
 

@@ -1,9 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.repository;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
@@ -13,9 +11,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayDeque;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,31 +24,32 @@ public class MovieRepositoryAPI {
     private int requestCurrentCounter = 0;
     private ServiceStatus status;
     private Target target;
+    private static MovieRepositoryAPI instance;
 
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService apiReadExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static MovieRepositoryAPI getInstance() {
 
-    @SuppressLint("StaticFieldLeak")
-    public MovieRepositoryAPI() {
+        if (instance == null)
+            instance = new MovieRepositoryAPI();
+
+        return instance;
+
+    }
+
+    private MovieRepositoryAPI() {
 
         api = MovieService.getInstance().getMovieAPI();
         moviesBuffer = new ArrayDeque<>();
         status = ServiceStatus.RUNNING;
 
-        /*new AsyncTask<Void, Void, Void> () {
+        new Thread() {
 
-            @Override
-            protected Void doInBackground(Void... voids) {
+            public void run() {
 
                 fillMoviesBuffer();
-                return null;
 
             }
-        };*/
 
-        apiReadExecutor.execute(this::fillMoviesBuffer);
-        apiReadExecutor.shutdown();
+        }.start();
 
     }
 
@@ -159,6 +155,13 @@ public class MovieRepositoryAPI {
 
         movie.setImage(image);
         moviesBuffer.addLast(movie);
+
+        synchronized (this) {
+
+            notifyAll();
+
+        }
+
         System.out.println("ON MOVIE ADDED <<<<<<<<<<");
         System.out.println("MOVIES SIZE: " + moviesBuffer.size());
 
@@ -171,7 +174,12 @@ public class MovieRepositoryAPI {
             try {
 
                 System.out.println("AWAITION");
-                apiReadExecutor.awaitTermination(10, TimeUnit.SECONDS);
+
+                synchronized (this) {
+
+                    wait();
+
+                }
 
             } catch (InterruptedException e) {
 
@@ -191,12 +199,16 @@ public class MovieRepositoryAPI {
 
         Movie movie = moviesBuffer.getFirst();
 
-        apiReadExecutor.execute(() -> {
+        new Thread() {
 
-            moviesBuffer.removeFirst();
-            fillMoviesBuffer();
+            public void run() {
 
-        });
+                moviesBuffer.removeFirst();
+                fillMoviesBuffer();
+
+            }
+
+        }.start();
 
         System.out.println("RETURNING MOVIE TO VM <<<<<<<<<<");
         return movie;

@@ -61,7 +61,7 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
-        if (this.getTag() != null && !this.getTag().equals("f0")) {
+        if ((this.getTag() != null && !this.getTag().equals("f0"))) {
 
             initPageActions(isMovieToWatch);
 
@@ -88,7 +88,7 @@ public class MovieFragment extends Fragment {
                 binding.imdbLink.setText(R.string.imdbText);
             else binding.imdbLink.setVisibility(View.GONE);
 
-            if (this.getTag() != null && this.getTag().equals("f0")) {
+            if ((this.getTag() != null && this.getTag().equals("f0")) && sharedViewModel.getIsPageReadyForScroll().getValue() == null) {
 
                 initPageActions(isMovieToWatch);
                 smoothScrollDown();
@@ -125,8 +125,8 @@ public class MovieFragment extends Fragment {
 
             if (s.equals(this.getTag())) {
 
-                System.out.println("GETTING TAGGO");
-                System.out.println(sharedViewModel.getIsPageReadyForScroll().hasActiveObservers());
+                initPageActions(isMovieToWatch);
+
                 sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                     @Override
                     public void onChanged(Boolean aBoolean) {
@@ -171,6 +171,7 @@ public class MovieFragment extends Fragment {
 
     private void initPageActions(Boolean b) {
 
+        System.out.println("IS MOVIE TO WATCH -> " + b);
         sharedViewModel.setIsPageLoaded(b);
 
     }

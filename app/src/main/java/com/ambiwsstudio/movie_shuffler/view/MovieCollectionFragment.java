@@ -21,6 +21,7 @@ import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBindin
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,6 +29,7 @@ public class MovieCollectionFragment extends Fragment {
 
     private MovieCollectionPagerAdapter adapter;
     private MovieSharedViewModel sharedViewModel;
+    private HashSet<String> moviesToWatch;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
 
@@ -46,6 +48,7 @@ public class MovieCollectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
+        sharedViewModel.setIsPageReadyForScroll(true);
         MovieCollectionViewModel movieCollectionViewModel = ViewModelProviders.of(this).get(MovieCollectionViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
@@ -53,9 +56,11 @@ public class MovieCollectionFragment extends Fragment {
         adapter = new MovieCollectionPagerAdapter(this.getActivity());
         viewPager2 = view.findViewById(R.id.pager);
         viewPager2.setAdapter(adapter);
+        viewPager2.setOffscreenPageLimit(2);
 
         viewPager2.setUserInputEnabled(false);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -71,8 +76,8 @@ public class MovieCollectionFragment extends Fragment {
                 viewPager2.setUserInputEnabled(false);
                 sharedViewModel.setCurrentFragmentInView("f" + position);
 
-                if (position == 1)
-                    sharedViewModel.setIsPageReadyForScroll(true);
+                /*if (position == 1)
+                    sharedViewModel.setIsPageReadyForScroll(true);*/
 
 
             }

@@ -22,13 +22,9 @@ public class MovieViewModel extends ViewModel {
     public MutableLiveData<String> imdbRating = new MutableLiveData<>();
     private MutableLiveData<String> imdbProceedAccess;
     private MutableLiveData<String> isErrorOccurred;
-    private MutableLiveData<Movie> movieMutableLiveData;
-    private final MovieRepositoryAPI repositoryAPI;
+    private final MutableLiveData<Movie> movieMutableLiveData;
 
     public MutableLiveData<Movie> getMovie() {
-
-        if (movieMutableLiveData == null)
-            movieMutableLiveData = new MutableLiveData<>();
 
         return movieMutableLiveData;
 
@@ -64,20 +60,17 @@ public class MovieViewModel extends ViewModel {
 
     public MovieViewModel() {
 
-        repositoryAPI = MovieRepositoryAPI.getInstance();
+        movieMutableLiveData = new MutableLiveData<>();
 
         new Thread() {
 
             public void run() {
 
-                movieMutableLiveData.postValue(repositoryAPI.getFirstMovieInQueue());
+                movieMutableLiveData.postValue(MovieRepositoryAPI.getInstance().getFirstMovieInQueue());
 
             }
 
         }.start();
-
-        /*MovieLoader.getInstance().isNeedViewUpdate(true);
-        MovieLoader.getInstance().loadMovie(this, 1);*/
 
     }
 

@@ -28,9 +28,7 @@ import java.util.TimerTask;
 public class MovieCollectionFragment extends Fragment {
 
     private static MovieCollectionFragment instance;
-    private static int currentFragmentPos = 0;
     private MovieCollectionPagerAdapter adapter;
-    private Movie currentMovie;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
 
@@ -79,7 +77,8 @@ public class MovieCollectionFragment extends Fragment {
 
                 super.onPageSelected(position);
 
-                currentFragmentPos = position;
+                // TODO FIX 'WATCH LATER' DISAPPEARS ON FRAGMENT COMEBACK
+                // TODO USER INPUT ENABLE AFTER SCROLL VIA SHARED VM
                 viewPager2.setUserInputEnabled(false);
                 new Timer().schedule(new TimerTask() {
                     @Override
@@ -121,61 +120,13 @@ public class MovieCollectionFragment extends Fragment {
 
         movieCollectionViewModel.getIsMovieToWatch().observe(this, aBoolean -> {
 
-            MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
-                    .getSupportFragmentManager()
-                    .findFragmentByTag("f" + currentFragmentPos);
+            if (aBoolean) {
 
-            if (fragment != null) {
+                binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
-                currentMovie = fragment.currentMovie;
+            } else {
 
-                if (aBoolean) {
-
-                    fragment.isMovieToWatch = true;
-                    currentMovie.setImdbIdClear(currentMovie.getImdbID().substring(2));
-
-                    new AsyncTask<Void, Void, Void> () {
-
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-
-                            if (MovieCollectionFragment.this.getActivity() != null)
-                                ((MovieActivity) MovieCollectionFragment.this.getActivity())
-                                        .getRoomInstance()
-                                        .movieDao()
-                                        .insertMovie(currentMovie);
-
-                            return null;
-                        }
-
-                    }.execute();
-
-                    binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
-
-                } else {
-
-                    fragment.isMovieToWatch = false;
-
-                    new AsyncTask<Void, Void, Void> () {
-
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-
-                            int id = Integer.parseInt(currentMovie.getImdbID().substring(2));
-                            if (MovieCollectionFragment.this.getActivity() != null)
-                                ((MovieActivity) MovieCollectionFragment.this.getActivity())
-                                        .getRoomInstance()
-                                        .movieDao()
-                                        .deleteMovieById(id);
-
-                            return null;
-                        }
-
-                    }.execute();
-
-                    binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
-
-                }
+                binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
 
             }
 

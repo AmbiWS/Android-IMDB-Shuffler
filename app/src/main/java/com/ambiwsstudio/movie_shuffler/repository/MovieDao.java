@@ -19,6 +19,6 @@ public interface MovieDao {
     void insertMovie(Movie movie);
 
     @Query("DELETE FROM movie WHERE id = :movId")
-    void deleteMovieById(int movId);
+    void deleteMovieById(String movId);
 
 }

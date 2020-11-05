@@ -33,7 +33,7 @@ public class MovieRepositoryDB {
 
     }
 
-    public void deleteMovieById(int id) {
+    public void deleteMovieById(String id) {
 
         AppDatabase.databaseWriteExecutor.execute(() -> dao.deleteMovieById(id));
 

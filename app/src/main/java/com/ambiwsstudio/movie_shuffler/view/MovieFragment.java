@@ -48,6 +48,8 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        System.out.println("CREATEDD");
+
         Bundle args = getArguments();
         if (args != null)
             ARG_TAG = args.getString(ARG_TAG);
@@ -83,8 +85,6 @@ public class MovieFragment extends Fragment {
                 binding.imdbLink.setText(R.string.imdbText);
             else binding.imdbLink.setVisibility(View.GONE);
 
-            smoothScrollDown();
-
         });
 
         movieViewModel.getImdbProceedAccess().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -111,6 +111,27 @@ public class MovieFragment extends Fragment {
 
         });
 
+        sharedViewModel.getCurrentFragmentInView().observe(getViewLifecycleOwner(), s -> {
+
+            if (s.equals(this.getTag())) {
+
+                sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), aBoolean -> smoothScrollDown());
+                sharedViewModel.getIsMovieToWatch().observe(getViewLifecycleOwner(), aBoolean -> {
+
+                    isMovieToWatch = aBoolean;
+
+                });
+
+
+            } else {
+
+                sharedViewModel.getIsPageReadyForScroll().removeObservers(getViewLifecycleOwner());
+                sharedViewModel.getIsMovieToWatch().removeObservers(getViewLifecycleOwner());
+
+            }
+
+        });
+
     }
 
     private void textViewSetup(String data, TextView textView, String format) {
@@ -133,16 +154,16 @@ public class MovieFragment extends Fragment {
 
         sharedViewModel.setIsPageLoaded(b);
 
-        /*
-        MovieCollectionFragment.getInstance().binding.listImageView.setVisibility(View.VISIBLE);
-        MovieCollectionFragment.getInstance().binding.checkImageView.setVisibility(View.VISIBLE);*/
-
     }
 
     void smoothScrollDown() {
 
+        System.out.println("smooth scroll 1");
+
         if (isScrolled) {
 
+            System.out.println("IS ALREADY SCROLLED EARLIER BLOCK");
+            System.out.println(MovieFragment.this.getTag());
             sharedViewModel.setIsPageScrolled(true);
             return;
 
@@ -159,6 +180,7 @@ public class MovieFragment extends Fragment {
             public void onFinish() {
 
                 isScrolled = true;
+                System.out.println(MovieFragment.this.getTag());
                 sharedViewModel.setIsPageScrolled(true);
 
             }

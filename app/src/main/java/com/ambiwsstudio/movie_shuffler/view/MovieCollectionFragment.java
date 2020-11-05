@@ -67,7 +67,11 @@ public class MovieCollectionFragment extends Fragment {
                 super.onPageSelected(position);
 
                 // TODO FIX 'WATCH LATER' DISAPPEARS ON FRAGMENT COMEBACK
-                // TODO USER INPUT ENABLE AFTER SCROLL VIA SHARED VM
+                System.out.println("ON PAGE SELECTED");
+                viewPager2.setUserInputEnabled(false);
+                sharedViewModel.setCurrentFragmentInView("f" + position);
+                sharedViewModel.setIsPageReadyForScroll(true);
+
             }
 
             @Override
@@ -88,7 +92,26 @@ public class MovieCollectionFragment extends Fragment {
             if (aBoolean) {
 
                 binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
-                // here load to mov
+
+            } else {
+
+                binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+
+            }
+
+            sharedViewModel.setIsMovieToWatch(aBoolean);
+
+        });
+
+        sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), aBoolean -> {
+
+            System.out.println("GET PAGE LOADED FROM VIEW");
+            binding.listImageView.setVisibility(View.VISIBLE);
+            binding.checkImageView.setVisibility(View.VISIBLE);
+
+            if (aBoolean) {
+
+                binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
             } else {
 
@@ -98,35 +121,7 @@ public class MovieCollectionFragment extends Fragment {
 
         });
 
-        sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-
-                System.out.println("GET PAGE LOADED FROM VIEW");
-                binding.listImageView.setVisibility(View.VISIBLE);
-                binding.checkImageView.setVisibility(View.VISIBLE);
-
-                if (aBoolean) {
-
-                    binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
-
-                } else {
-
-                    binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
-
-                }
-
-            }
-        });
-
-        sharedViewModel.getIsPageScrolled().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-
-                viewPager2.setUserInputEnabled(true);
-
-            }
-        });
+        sharedViewModel.getIsPageScrolled().observe(getViewLifecycleOwner(), aBoolean -> viewPager2.setUserInputEnabled(true));
 
     }
 }

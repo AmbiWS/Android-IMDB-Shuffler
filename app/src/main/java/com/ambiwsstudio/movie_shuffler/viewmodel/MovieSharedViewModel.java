@@ -7,6 +7,27 @@ public class MovieSharedViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isPageLoaded = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isPageScrolled = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isPageReadyForScroll = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isMovieToWatch = new MutableLiveData<>();
+    private final MutableLiveData<String> currentFragmentInView = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> getIsMovieToWatch() {
+
+        return isMovieToWatch;
+
+    }
+
+    public MutableLiveData<String> getCurrentFragmentInView() {
+
+        return currentFragmentInView;
+
+    }
+
+    public MutableLiveData<Boolean> getIsPageReadyForScroll() {
+
+        return isPageReadyForScroll;
+
+    }
 
     public MutableLiveData<Boolean> getIsPageLoaded() {
 
@@ -20,16 +41,32 @@ public class MovieSharedViewModel extends ViewModel {
 
     }
 
+    public void setIsMovieToWatch(Boolean bool) {
+
+        isMovieToWatch.setValue(bool);
+
+    }
+
+    public void setCurrentFragmentInView(String string) {
+
+        currentFragmentInView.setValue(string);
+
+    }
+
+    public void setIsPageReadyForScroll(Boolean bool) {
+
+        isPageReadyForScroll.setValue(bool);
+
+    }
+
     public void setIsPageLoaded(Boolean bool) {
 
-        System.out.println("SET PAGE LOADED FROM VIEW");
         isPageLoaded.setValue(bool);
 
     }
 
     public void setIsPageScrolled(Boolean bool) {
 
-        System.out.println("SET PAGE SCROLLED FROM VIEW");
         isPageScrolled.setValue(bool);
 
     }

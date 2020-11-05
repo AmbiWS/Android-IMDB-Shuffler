@@ -71,8 +71,9 @@ public class MovieCollectionFragment extends Fragment {
                 viewPager2.setUserInputEnabled(false);
                 sharedViewModel.setCurrentFragmentInView("f" + position);
 
-                if (position != 0)
+                if (position == 1)
                     sharedViewModel.setIsPageReadyForScroll(true);
+
 
             }
 

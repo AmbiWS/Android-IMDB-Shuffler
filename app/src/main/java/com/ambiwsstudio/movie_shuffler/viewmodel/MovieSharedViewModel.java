@@ -55,6 +55,7 @@ public class MovieSharedViewModel extends ViewModel {
 
     public void setIsPageReadyForScroll(Boolean bool) {
 
+        System.out.println("SET IS PAGE READY FOR SCROLL");
         isPageReadyForScroll.setValue(bool);
 
     }

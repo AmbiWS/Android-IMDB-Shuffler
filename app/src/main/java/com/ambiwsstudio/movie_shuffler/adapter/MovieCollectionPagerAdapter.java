@@ -12,22 +12,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
 
     private static int pagesCount = 5;
-    private final FragmentActivity fa;
 
     public MovieCollectionPagerAdapter(FragmentActivity fa) {
 
         super(fa);
-        this.fa = fa;
 
     }
 
-    public FragmentActivity getFragmentActivity() {
-
-        return fa;
-
-    }
-
-    @Override
+    /*@Override
     public long getItemId(int position) {
 
         return super.getItemId(position);
@@ -39,7 +31,7 @@ public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
 
         return super.containsItem(itemId);
 
-    }
+    }*/
 
     @NonNull
     @Override

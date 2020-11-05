@@ -48,8 +48,6 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        System.out.println("CREATEDD");
-
         Bundle args = getArguments();
         if (args != null)
             ARG_TAG = args.getString(ARG_TAG);
@@ -63,8 +61,11 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
-        if (this.getTag() != null && !this.getTag().equals("f0"))
+        if (this.getTag() != null && !this.getTag().equals("f0")) {
+
             initPageActions(isMovieToWatch);
+
+        }
 
         movieViewModel.getMovie().observe(getViewLifecycleOwner(), movie -> {
 
@@ -124,7 +125,16 @@ public class MovieFragment extends Fragment {
 
             if (s.equals(this.getTag())) {
 
-                sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), aBoolean -> smoothScrollDown());
+                System.out.println("GETTING TAGGO");
+                System.out.println(sharedViewModel.getIsPageReadyForScroll().hasActiveObservers());
+                sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+
+                        smoothScrollDown();
+
+                    }
+                });
                 sharedViewModel.getIsMovieToWatch().observe(getViewLifecycleOwner(), aBoolean -> {
 
                     isMovieToWatch = aBoolean;

@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.CountDownTimer;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
-import com.ambiwsstudio.movie_shuffler.model.Movie;
+import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel;
 
 public class MovieFragment extends Fragment {
@@ -31,7 +32,7 @@ public class MovieFragment extends Fragment {
     private ScrollView scrollView;
     private boolean isScrolled = false;
     boolean isMovieToWatch = false;
-    Movie currentMovie;
+    private MovieSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,6 +52,7 @@ public class MovieFragment extends Fragment {
         if (args != null)
             ARG_TAG = args.getString(ARG_TAG);
 
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
         MovieViewModel movieViewModel = ViewModelProviders.of(this).get(ARG_TAG, MovieViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieViewModel(movieViewModel);
@@ -59,9 +61,9 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
-        movieViewModel.getMovie().observe(this, movie -> {
+        movieViewModel.getMovie().observe(getViewLifecycleOwner(), movie -> {
 
-            currentMovie = movie;
+            initPageActions(isMovieToWatch);
             binding.linearLayout.setVisibility(View.VISIBLE);
 
             if (movie.getImage() != null)
@@ -81,16 +83,11 @@ public class MovieFragment extends Fragment {
                 binding.imdbLink.setText(R.string.imdbText);
             else binding.imdbLink.setVisibility(View.GONE);
 
-            if (ARG_TAG.equals("0")) {
-
-                smoothScrollDown();
-                initPageActions(true);
-
-            }
+            smoothScrollDown();
 
         });
 
-        movieViewModel.getImdbProceedAccess().observe(this, new Observer<String>() {
+        movieViewModel.getImdbProceedAccess().observe(getViewLifecycleOwner(), new Observer<String>() {
 
             final String IMDB_BASE_URL = "https://www.imdb.com";
 
@@ -107,7 +104,7 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        movieViewModel.getErrorOccurred().observe(this, s -> {
+        movieViewModel.getErrorOccurred().observe(getViewLifecycleOwner(), s -> {
 
             if (s.equals("Error"))
                 errorHandle();
@@ -134,28 +131,35 @@ public class MovieFragment extends Fragment {
 
     private void initPageActions(Boolean b) {
 
-        MovieCollectionFragment.getInstance().viewPager2.setUserInputEnabled(b);
+        sharedViewModel.setIsPageLoaded(b);
+
+        /*
         MovieCollectionFragment.getInstance().binding.listImageView.setVisibility(View.VISIBLE);
-        MovieCollectionFragment.getInstance().binding.checkImageView.setVisibility(View.VISIBLE);
+        MovieCollectionFragment.getInstance().binding.checkImageView.setVisibility(View.VISIBLE);*/
 
     }
 
     void smoothScrollDown() {
 
-        if (isScrolled)
+        if (isScrolled) {
+
+            sharedViewModel.setIsPageScrolled(true);
             return;
+
+        }
 
         scrollView.post(() -> new CountDownTimer(1500, 20) {
 
             public void onTick(long millisUntilFinished) {
 
-                scrollView.scrollTo(0, (int)(binding.textViewTitle.getRootView().getBottom() - millisUntilFinished));
+                scrollView.scrollTo(0, (int) (binding.textViewTitle.getRootView().getBottom() - millisUntilFinished));
 
             }
 
             public void onFinish() {
 
                 isScrolled = true;
+                sharedViewModel.setIsPageScrolled(true);
 
             }
         }.start());

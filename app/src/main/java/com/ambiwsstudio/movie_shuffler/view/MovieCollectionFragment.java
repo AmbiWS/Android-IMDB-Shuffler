@@ -1,14 +1,13 @@
 package com.ambiwsstudio.movie_shuffler.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,27 +18,18 @@ import android.view.ViewGroup;
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBinding;
-import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
+import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MovieCollectionFragment extends Fragment {
 
-    private static MovieCollectionFragment instance;
     private MovieCollectionPagerAdapter adapter;
+    private MovieSharedViewModel sharedViewModel;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
-
-    static MovieCollectionFragment getInstance() {
-
-        if (instance == null)
-            instance = new MovieCollectionFragment();
-
-        return instance;
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,16 +42,15 @@ public class MovieCollectionFragment extends Fragment {
 
     }
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
         MovieCollectionViewModel movieCollectionViewModel = ViewModelProviders.of(this).get(MovieCollectionViewModel.class);
-        instance = MovieCollectionFragment.this;
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
 
-        adapter = new MovieCollectionPagerAdapter(instance.getActivity());
+        adapter = new MovieCollectionPagerAdapter(this.getActivity());
         viewPager2 = view.findViewById(R.id.pager);
         viewPager2.setAdapter(adapter);
 
@@ -79,30 +68,6 @@ public class MovieCollectionFragment extends Fragment {
 
                 // TODO FIX 'WATCH LATER' DISAPPEARS ON FRAGMENT COMEBACK
                 // TODO USER INPUT ENABLE AFTER SCROLL VIA SHARED VM
-                viewPager2.setUserInputEnabled(false);
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-
-                        viewPager2.setUserInputEnabled(true);
-
-                    }
-                }, 1000);
-
-                MovieFragment fragment = (MovieFragment) adapter.getFragmentActivity()
-                        .getSupportFragmentManager()
-                        .findFragmentByTag("f" + position);
-
-                if (fragment != null) {
-
-                    if (fragment.isMovieToWatch)
-                        binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
-                    else binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
-
-                    if (position != 0)
-                        fragment.smoothScrollDown();
-
-                }
             }
 
             @Override
@@ -111,18 +76,19 @@ public class MovieCollectionFragment extends Fragment {
             }
         });
 
-        movieCollectionViewModel.getIsAccessedToList().observe(this, aBoolean -> {
+        movieCollectionViewModel.getIsAccessedToList().observe(getViewLifecycleOwner(), aBoolean -> {
 
             Intent intent = new Intent(getContext(), MovieListActivity.class);
             startActivity(intent);
 
         });
 
-        movieCollectionViewModel.getIsMovieToWatch().observe(this, aBoolean -> {
+        movieCollectionViewModel.getIsMovieToWatch().observe(getViewLifecycleOwner(), aBoolean -> {
 
             if (aBoolean) {
 
                 binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+                // here load to mov
 
             } else {
 
@@ -130,6 +96,36 @@ public class MovieCollectionFragment extends Fragment {
 
             }
 
+        });
+
+        sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                System.out.println("GET PAGE LOADED FROM VIEW");
+                binding.listImageView.setVisibility(View.VISIBLE);
+                binding.checkImageView.setVisibility(View.VISIBLE);
+
+                if (aBoolean) {
+
+                    binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+
+                } else {
+
+                    binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+
+                }
+
+            }
+        });
+
+        sharedViewModel.getIsPageScrolled().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                viewPager2.setUserInputEnabled(true);
+
+            }
         });
 
     }

@@ -11,24 +11,12 @@ import com.ambiwsstudio.movie_shuffler.repository.AppDatabase;
 
 public class MovieActivity extends AppCompatActivity {
 
-    private AppDatabase instance;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
-
-    }
-
-    public AppDatabase getRoomInstance() {
-
-        if (instance == null)
-            instance = Room.databaseBuilder(getApplicationContext(),
-                    AppDatabase.class, "aws-itvs-db").build();
-
-        return instance;
 
     }
 

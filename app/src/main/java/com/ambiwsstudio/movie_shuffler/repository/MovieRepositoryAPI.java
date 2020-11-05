@@ -55,7 +55,6 @@ public class MovieRepositoryAPI {
 
     private void pushError() {
 
-        System.out.println("ERROR PUSHED");
         status = ServiceStatus.ERROR;
         moviesBuffer.clear();
         moviesBuffer.addFirst(new Movie());
@@ -81,7 +80,6 @@ public class MovieRepositoryAPI {
                         @Override
                         public void onResponse(Call<Movie> call, Response<Movie> response) {
 
-                            System.out.println("RETROFIT RESPONSE");
                             if (response.body().getResponse().equals("False")
                                     /*|| response.body().getTitle().contains("Episode")
                                     || response.body().getGenre().equals("N/A")
@@ -89,23 +87,19 @@ public class MovieRepositoryAPI {
                                     || response.body().getActors().equals("N/A")*/
                                 /*|| response.body().getPoster().equals("N/A")*/) {
 
-                                System.out.println("ON RESPONSE FALSE");
                                 fillMoviesBuffer();
 
                             } else {
 
-                                System.out.println("ON RESPONSE SUCCESS");
                                 requestCurrentCounter = 0;
                                 final Movie movie = response.body();
 
                                 if (!movie.getPoster().equals("N/A")) {
 
-                                    System.out.println("ON POSTER EXISTS");
                                     target = new Target() {
                                         @Override
                                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                                            System.out.println("ON BITMAP SUCCESS");
                                             setupMovie(movie, bitmap);
                                             fillMoviesBuffer();
 
@@ -114,7 +108,6 @@ public class MovieRepositoryAPI {
                                         @Override
                                         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
-                                            System.out.println("ON BITMAP FAIL SUCCESS");
                                             pushError();
 
                                         }
@@ -128,7 +121,6 @@ public class MovieRepositoryAPI {
 
                                 } else {
 
-                                    System.out.println("ON POSTER NULL");
                                     setupMovie(movie, null);
                                     fillMoviesBuffer();
 
@@ -141,7 +133,6 @@ public class MovieRepositoryAPI {
                         @Override
                         public void onFailure(Call<Movie> call, Throwable t) {
 
-                            System.out.println("RETROFIT FAIL");
                             pushError();
 
                         }
@@ -162,9 +153,6 @@ public class MovieRepositoryAPI {
 
         }
 
-        System.out.println("ON MOVIE ADDED <<<<<<<<<<");
-        System.out.println("MOVIES SIZE: " + moviesBuffer.size());
-
     }
 
     public Movie getFirstMovieInQueue() {
@@ -172,8 +160,6 @@ public class MovieRepositoryAPI {
         if (moviesBuffer.size() == 0) {
 
             try {
-
-                System.out.println("AWAITION");
 
                 synchronized (this) {
 
@@ -190,7 +176,6 @@ public class MovieRepositoryAPI {
 
         }
 
-        System.out.println("SIZE" + moviesBuffer.size());
         return refillMovieAsync();
 
     }
@@ -210,7 +195,6 @@ public class MovieRepositoryAPI {
 
         }.start();
 
-        System.out.println("RETURNING MOVIE TO VM <<<<<<<<<<");
         return movie;
 
     }

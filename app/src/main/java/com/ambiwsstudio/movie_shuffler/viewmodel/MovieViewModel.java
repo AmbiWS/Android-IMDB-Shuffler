@@ -66,7 +66,11 @@ public class MovieViewModel extends ViewModel {
 
             public void run() {
 
-                movieMutableLiveData.postValue(MovieRepositoryAPI.getInstance().getFirstMovieInQueue());
+                Movie movie = MovieRepositoryAPI.getInstance().getFirstMovieInQueue();
+
+                if (movie.getResponse() == null)
+                    isErrorOccurred.postValue("Error");
+                else movieMutableLiveData.postValue(movie);
 
             }
 

@@ -70,7 +70,9 @@ public class MovieCollectionFragment extends Fragment {
                 System.out.println("ON PAGE SELECTED");
                 viewPager2.setUserInputEnabled(false);
                 sharedViewModel.setCurrentFragmentInView("f" + position);
-                sharedViewModel.setIsPageReadyForScroll(true);
+
+                if (position != 0)
+                    sharedViewModel.setIsPageReadyForScroll(true);
 
             }
 
@@ -105,7 +107,6 @@ public class MovieCollectionFragment extends Fragment {
 
         sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), aBoolean -> {
 
-            System.out.println("GET PAGE LOADED FROM VIEW");
             binding.listImageView.setVisibility(View.VISIBLE);
             binding.checkImageView.setVisibility(View.VISIBLE);
 

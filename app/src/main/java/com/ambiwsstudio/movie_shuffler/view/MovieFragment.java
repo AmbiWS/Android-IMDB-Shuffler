@@ -63,9 +63,11 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
+        if (this.getTag() != null && !this.getTag().equals("f0"))
+            initPageActions(isMovieToWatch);
+
         movieViewModel.getMovie().observe(getViewLifecycleOwner(), movie -> {
 
-            initPageActions(isMovieToWatch);
             binding.linearLayout.setVisibility(View.VISIBLE);
 
             if (movie.getImage() != null)
@@ -84,6 +86,13 @@ public class MovieFragment extends Fragment {
             if (!movie.getImdbID().equals("N/A"))
                 binding.imdbLink.setText(R.string.imdbText);
             else binding.imdbLink.setVisibility(View.GONE);
+
+            if (this.getTag() != null && this.getTag().equals("f0")) {
+
+                initPageActions(isMovieToWatch);
+                smoothScrollDown();
+
+            }
 
         });
 

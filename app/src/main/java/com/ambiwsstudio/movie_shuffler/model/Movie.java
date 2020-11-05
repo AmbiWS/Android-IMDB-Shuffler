@@ -119,16 +119,16 @@ public class Movie {
     @Ignore
     private Bitmap image;
 
-    String getResponse() {
-        return response;
+    public void setImdbIdClear(@NonNull String imdbIdClear) {
+        this.imdbIdClear = imdbIdClear;
     }
 
-    void setImage(Bitmap image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
-    public void setImdbIdClear(@NonNull String imdbIdClear) {
-        this.imdbIdClear = imdbIdClear;
+    public String getResponse() {
+        return response;
     }
 
     public @NonNull String getImdbIdClear() {

@@ -8,22 +8,22 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 
-public class MovieRepository {
+public class MovieRepositoryDB {
 
     private final MovieDao dao;
-    private final LiveData<List<Movie>> observableMovies;
+    private final LiveData<List<Movie>> observableMoviesDB;
 
-    public MovieRepository(Application application) {
+    public MovieRepositoryDB(Application application) {
 
         AppDatabase database = AppDatabase.getInstance(application);
         dao = database.movieDao();
-        observableMovies = dao.getAll();
+        observableMoviesDB = dao.getAll();
 
     }
 
-    public LiveData<List<Movie>> getObservableMovies() {
+    public LiveData<List<Movie>> getObservableMoviesDB() {
 
-        return observableMovies;
+        return observableMoviesDB;
 
     }
 

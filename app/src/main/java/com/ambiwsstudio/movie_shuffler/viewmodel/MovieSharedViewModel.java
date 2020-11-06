@@ -1,5 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
+import com.ambiwsstudio.movie_shuffler.model.Movie;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,6 +12,13 @@ public class MovieSharedViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isPageScrolled = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isPageReadyForScroll = new MutableLiveData<>();
     private final MutableLiveData<String> currentFragmentInView = new MutableLiveData<>();
+    private final MutableLiveData<Movie> currentMovie = new MutableLiveData<>();
+
+    public MutableLiveData<Movie> getCurrentMovie() {
+
+        return currentMovie;
+
+    }
 
     public MutableLiveData<String> getIsFragmentLoaded() {
 
@@ -38,6 +47,12 @@ public class MovieSharedViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsPageScrolled() {
 
         return isPageScrolled;
+
+    }
+
+    public void setCurrentMovie(Movie movie) {
+
+        currentMovie.setValue(movie);
 
     }
 

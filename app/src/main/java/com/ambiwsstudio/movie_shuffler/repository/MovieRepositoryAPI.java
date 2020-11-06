@@ -25,7 +25,6 @@ public class MovieRepositoryAPI {
     private ServiceStatus status;
     private Target target;
     private static MovieRepositoryAPI instance;
-    private static Movie lastViewableMovie;
 
     public static MovieRepositoryAPI getInstance() {
 
@@ -33,21 +32,6 @@ public class MovieRepositoryAPI {
             instance = new MovieRepositoryAPI();
 
         return instance;
-
-    }
-
-    public static Movie getLastMovie() {
-
-        if (lastViewableMovie == null)
-            lastViewableMovie = new Movie();
-
-        return lastViewableMovie;
-
-    }
-
-    public static void setLastMovie(Movie movie) {
-
-        lastViewableMovie = movie;
 
     }
 
@@ -198,7 +182,7 @@ public class MovieRepositoryAPI {
 
     private Movie refillMovieAsync() {
 
-        lastViewableMovie = moviesBuffer.getFirst();
+        Movie movie = moviesBuffer.getFirst();
 
         new Thread() {
 
@@ -213,7 +197,7 @@ public class MovieRepositoryAPI {
 
         }.start();
 
-        return lastViewableMovie;
+        return movie;
 
     }
 

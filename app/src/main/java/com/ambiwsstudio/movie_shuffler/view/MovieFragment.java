@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
+import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel;
 
@@ -32,6 +33,7 @@ public class MovieFragment extends Fragment {
     private ScrollView scrollView;
     private boolean isScrolled = false;
     private MovieSharedViewModel sharedViewModel;
+    private Movie currentMovie;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,6 +64,8 @@ public class MovieFragment extends Fragment {
 
         movieViewModel.getMovie().observe(getViewLifecycleOwner(), movie -> {
 
+            movie.setImdbIdClear(movie.getImdbID().substring(2));
+            currentMovie = movie;
             binding.linearLayout.setVisibility(View.VISIBLE);
 
             if (movie.getImage() != null)
@@ -85,6 +89,7 @@ public class MovieFragment extends Fragment {
 
             if ((this.getTag() != null && this.getTag().equals("f0")) && sharedViewModel.getIsPageReadyForScroll().getValue() == null) {
 
+                sharedViewModel.setCurrentMovie(currentMovie);
                 sharedViewModel.setIsPageLoaded(true);
                 smoothScrollDown();
 
@@ -119,6 +124,10 @@ public class MovieFragment extends Fragment {
         sharedViewModel.getCurrentFragmentInView().observe(getViewLifecycleOwner(), s -> {
 
             if (s.equals(this.getTag())) {
+
+                System.out.println("CURRENT FRAGMENT GET");
+                System.out.println(this.getTag());
+                sharedViewModel.setCurrentMovie(currentMovie);
 
                 sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                     @Override
@@ -159,7 +168,6 @@ public class MovieFragment extends Fragment {
 
         if (isScrolled) {
 
-            System.out.println(MovieFragment.this.getTag());
             sharedViewModel.setIsPageScrolled(true);
             return;
 

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBinding;
+import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 
@@ -31,7 +32,8 @@ public class MovieCollectionFragment extends Fragment {
     private MovieCollectionPagerAdapter adapter;
     private MovieSharedViewModel sharedViewModel;
     private final HashSet<String> moviesToWatch = new HashSet<>();
-    private int currentPosition = 0;
+    private int currentPosition = -1;
+    private Movie currentMovie;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
 
@@ -83,6 +85,7 @@ public class MovieCollectionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        currentMovie = new Movie();
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
         MovieCollectionViewModel movieCollectionViewModel = ViewModelProviders.of(this).get(MovieCollectionViewModel.class);
         binding.setLifecycleOwner(this);
@@ -109,8 +112,8 @@ public class MovieCollectionFragment extends Fragment {
                 currentPosition = position;
                 viewPager2.setUserInputEnabled(false);
 
-                System.out.println(moviesToWatch);
-                System.out.println(position);
+                //System.out.println(moviesToWatch);
+                //System.out.println(position);
                 if (moviesToWatch.contains("f" + currentPosition)) {
 
                     binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
@@ -152,7 +155,7 @@ public class MovieCollectionFragment extends Fragment {
 
             }
 
-            //sharedViewModel.setIsMovieToWatch(aBoolean);
+            movieCollectionViewModel.saveMovie(aBoolean, currentMovie);
 
         });
 
@@ -178,6 +181,12 @@ public class MovieCollectionFragment extends Fragment {
         });
 
         sharedViewModel.getIsPageScrolled().observe(getViewLifecycleOwner(), aBoolean -> viewPager2.setUserInputEnabled(true));
+
+        sharedViewModel.getCurrentMovie().observe(getViewLifecycleOwner(), movie -> {
+
+            currentMovie = movie;
+
+        });
 
     }
 }

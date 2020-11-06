@@ -54,24 +54,36 @@ public class MovieCollectionViewModel extends AndroidViewModel {
 
     }
 
+    public void saveMovie(Boolean bool, Movie movie) {
+
+        if (bool) {
+
+            repositoryDB.insertMovie(movie);
+
+        } else {
+
+            repositoryDB.deleteMovieById(movie.getImdbIdClear());
+
+        }
+
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     public void onSaveClick(View view) {
 
         Log.i("MovieCollectionVM", "SaveClick Caught: " + view.toString());
         ImageView imageView = (ImageView) view;
 
-        Movie lastMovie = MovieRepositoryAPI.getLastMovie();
-
         if (((ColorDrawable) imageView.getBackground()).getColor()
                 == ((ColorDrawable) getApplication().getResources().getDrawable(R.color.colorLightTrans)).getColor()) {
 
-            lastMovie.setImdbIdClear(lastMovie.getImdbID().substring(2));
-            repositoryDB.insertMovie(lastMovie);
+            //lastMovie.setImdbIdClear(lastMovie.getImdbID().substring(2));
+            //repositoryDB.insertMovie(lastMovie);
             isMovieToWatch.setValue(true);
 
         } else {
 
-            repositoryDB.deleteMovieById(lastMovie.getImdbID().substring(2));
+            //repositoryDB.deleteMovieById(lastMovie.getImdbID().substring(2));
             isMovieToWatch.setValue(false);
 
         }

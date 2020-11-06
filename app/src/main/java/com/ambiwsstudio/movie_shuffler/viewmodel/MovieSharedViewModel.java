@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 public class MovieSharedViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isPageLoaded = new MutableLiveData<>();
+    private final MutableLiveData<String> isFragmentLoaded = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isPageScrolled = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isPageReadyForScroll = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> isMovieToWatch = new MutableLiveData<>();
     private final MutableLiveData<String> currentFragmentInView = new MutableLiveData<>();
 
-    public MutableLiveData<Boolean> getIsMovieToWatch() {
+    public MutableLiveData<String> getIsFragmentLoaded() {
 
-        return isMovieToWatch;
+        return isFragmentLoaded;
 
     }
 
@@ -31,7 +31,6 @@ public class MovieSharedViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getIsPageLoaded() {
 
-        System.out.println("Getting 0F Is Loaded!");
         return isPageLoaded;
 
     }
@@ -42,9 +41,9 @@ public class MovieSharedViewModel extends ViewModel {
 
     }
 
-    public void setIsMovieToWatch(Boolean bool) {
+    public void setIsFragmentLoaded(String string) {
 
-        isMovieToWatch.setValue(bool);
+        isFragmentLoaded.setValue(string);
 
     }
 
@@ -56,7 +55,6 @@ public class MovieSharedViewModel extends ViewModel {
 
     public void setIsPageReadyForScroll(Boolean bool) {
 
-        System.out.println("SET IS PAGE READY FOR SCROLL");
         isPageReadyForScroll.setValue(bool);
 
     }

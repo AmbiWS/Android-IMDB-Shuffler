@@ -81,9 +81,10 @@ public class MovieFragment extends Fragment {
                 binding.imdbLink.setText(R.string.imdbText);
             else binding.imdbLink.setVisibility(View.GONE);
 
+            sharedViewModel.setIsFragmentLoaded(MovieFragment.this.getTag());
+
             if ((this.getTag() != null && this.getTag().equals("f0")) && sharedViewModel.getIsPageReadyForScroll().getValue() == null) {
 
-                System.out.println("Setting 0F Is Loaded!");
                 sharedViewModel.setIsPageLoaded(true);
                 smoothScrollDown();
 
@@ -156,11 +157,8 @@ public class MovieFragment extends Fragment {
 
     void smoothScrollDown() {
 
-        System.out.println("smooth scroll 1");
-
         if (isScrolled) {
 
-            System.out.println("IS ALREADY SCROLLED EARLIER BLOCK");
             System.out.println(MovieFragment.this.getTag());
             sharedViewModel.setIsPageScrolled(true);
             return;

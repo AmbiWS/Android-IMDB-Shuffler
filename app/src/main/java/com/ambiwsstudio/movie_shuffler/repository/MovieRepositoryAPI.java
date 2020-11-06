@@ -204,8 +204,10 @@ public class MovieRepositoryAPI {
 
             public void run() {
 
-                moviesBuffer.removeFirst();
-                fillMoviesBuffer();
+                synchronized (this) {
+                    moviesBuffer.removeFirst();
+                    fillMoviesBuffer();
+                }
 
             }
 

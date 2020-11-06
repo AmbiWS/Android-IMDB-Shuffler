@@ -21,6 +21,7 @@ import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBindin
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 
+import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -45,6 +46,40 @@ public class MovieCollectionFragment extends Fragment {
 
     }
 
+    /*private void updateRange(int i) {
+
+        if (!isRangePreloaded) {
+
+            if (fragmentRange.size() < 5 && !fragmentRange.contains(i)) {
+
+                fragmentRange.addLast(currentPosition);
+
+                if (fragmentRange.size() == 5)
+                    isRangePreloaded = true;
+
+            }
+
+        } else {
+
+            int currPosTemp = currentPosition;
+            if (fragmentRange.getLast() == currPosTemp - 1) {
+
+                fragmentRange.clear();
+                for (int j = 0; j < 5; j++)
+                    fragmentRange.addFirst(currPosTemp--);
+
+            } else if (fragmentRange.getFirst() - 1 == currPosTemp) {
+
+                fragmentRange.clear();
+                for (int j = 0; j < 5; j++)
+                    fragmentRange.addLast(currPosTemp++);
+
+            }
+
+        }
+
+    }*/
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
@@ -56,7 +91,7 @@ public class MovieCollectionFragment extends Fragment {
         adapter = new MovieCollectionPagerAdapter(this.getActivity());
         viewPager2 = view.findViewById(R.id.pager);
         viewPager2.setAdapter(adapter);
-        viewPager2.setOffscreenPageLimit(2);
+        viewPager2.setOffscreenPageLimit(1);
 
         viewPager2.setUserInputEnabled(false);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -71,19 +106,22 @@ public class MovieCollectionFragment extends Fragment {
 
                 super.onPageSelected(position);
 
-                // TODO FIX 'WATCH LATER' DISAPPEARS ON FRAGMENT COMEBACK
-                System.out.println("ON PAGE SELECTED");
                 currentPosition = position;
                 viewPager2.setUserInputEnabled(false);
 
-                if (moviesToWatch.contains("f" + currentPosition))
+                System.out.println(moviesToWatch);
+                System.out.println(position);
+                if (moviesToWatch.contains("f" + currentPosition)) {
+
                     binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
 
+                } else {
+
+                    binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+
+                }
+
                 sharedViewModel.setCurrentFragmentInView("f" + position);
-
-                /*if (position == 1)
-                    sharedViewModel.setIsPageReadyForScroll(true);*/
-
 
             }
 
@@ -114,26 +152,20 @@ public class MovieCollectionFragment extends Fragment {
 
             }
 
-            sharedViewModel.setIsMovieToWatch(aBoolean);
+            //sharedViewModel.setIsMovieToWatch(aBoolean);
 
         });
 
+        sharedViewModel.getIsFragmentLoaded().observe(getViewLifecycleOwner(), moviesToWatch::remove);
+
         sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), aBoolean -> {
 
-            System.out.println("0F LOADED PROC!");
             sharedViewModel.setIsPageReadyForScroll(true);
 
             if (aBoolean) {
 
                 binding.listImageView.setVisibility(View.VISIBLE);
                 binding.checkImageView.setVisibility(View.VISIBLE);
-
-
-                // TODO
-                //binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
-
-                //binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
-
 
             } else {
 

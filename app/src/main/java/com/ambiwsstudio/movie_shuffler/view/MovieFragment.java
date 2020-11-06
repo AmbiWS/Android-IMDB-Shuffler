@@ -31,7 +31,6 @@ public class MovieFragment extends Fragment {
     private FragmentMovieBinding binding;
     private ScrollView scrollView;
     private boolean isScrolled = false;
-    boolean isMovieToWatch = false;
     private MovieSharedViewModel sharedViewModel;
 
     @Override
@@ -61,12 +60,6 @@ public class MovieFragment extends Fragment {
         scrollView = (ScrollView) view.getRootView();
         scrollView.setSmoothScrollingEnabled(true);
 
-        if ((this.getTag() != null && !this.getTag().equals("f0"))) {
-
-            initPageActions(isMovieToWatch);
-
-        }
-
         movieViewModel.getMovie().observe(getViewLifecycleOwner(), movie -> {
 
             binding.linearLayout.setVisibility(View.VISIBLE);
@@ -90,7 +83,8 @@ public class MovieFragment extends Fragment {
 
             if ((this.getTag() != null && this.getTag().equals("f0")) && sharedViewModel.getIsPageReadyForScroll().getValue() == null) {
 
-                initPageActions(isMovieToWatch);
+                System.out.println("Setting 0F Is Loaded!");
+                sharedViewModel.setIsPageLoaded(true);
                 smoothScrollDown();
 
             }
@@ -125,8 +119,6 @@ public class MovieFragment extends Fragment {
 
             if (s.equals(this.getTag())) {
 
-                initPageActions(isMovieToWatch);
-
                 sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                     @Override
                     public void onChanged(Boolean aBoolean) {
@@ -135,17 +127,10 @@ public class MovieFragment extends Fragment {
 
                     }
                 });
-                sharedViewModel.getIsMovieToWatch().observe(getViewLifecycleOwner(), aBoolean -> {
-
-                    isMovieToWatch = aBoolean;
-
-                });
-
 
             } else {
 
                 sharedViewModel.getIsPageReadyForScroll().removeObservers(getViewLifecycleOwner());
-                sharedViewModel.getIsMovieToWatch().removeObservers(getViewLifecycleOwner());
 
             }
 
@@ -165,14 +150,7 @@ public class MovieFragment extends Fragment {
 
         binding.imageViewPoster.setImageResource(R.drawable.error);
         binding.linearLayout.setVisibility(View.GONE);
-        initPageActions(false);
-
-    }
-
-    private void initPageActions(Boolean b) {
-
-        System.out.println("IS MOVIE TO WATCH -> " + b);
-        sharedViewModel.setIsPageLoaded(b);
+        sharedViewModel.setIsPageLoaded(false);
 
     }
 

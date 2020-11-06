@@ -31,6 +31,7 @@ public class MovieSharedViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getIsPageLoaded() {
 
+        System.out.println("Getting 0F Is Loaded!");
         return isPageLoaded;
 
     }

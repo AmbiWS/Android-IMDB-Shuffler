@@ -45,6 +45,12 @@ public class MovieRepositoryAPI {
 
     }
 
+    public static void setLastMovie(Movie movie) {
+
+        lastViewableMovie = movie;
+
+    }
+
     private MovieRepositoryAPI() {
 
         api = MovieService.getInstance().getMovieAPI();

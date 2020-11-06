@@ -29,7 +29,8 @@ public class MovieCollectionFragment extends Fragment {
 
     private MovieCollectionPagerAdapter adapter;
     private MovieSharedViewModel sharedViewModel;
-    private HashSet<String> moviesToWatch;
+    private final HashSet<String> moviesToWatch = new HashSet<>();
+    private int currentPosition = 0;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
 
@@ -48,7 +49,6 @@ public class MovieCollectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
-        sharedViewModel.setIsPageReadyForScroll(true);
         MovieCollectionViewModel movieCollectionViewModel = ViewModelProviders.of(this).get(MovieCollectionViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
@@ -73,7 +73,12 @@ public class MovieCollectionFragment extends Fragment {
 
                 // TODO FIX 'WATCH LATER' DISAPPEARS ON FRAGMENT COMEBACK
                 System.out.println("ON PAGE SELECTED");
+                currentPosition = position;
                 viewPager2.setUserInputEnabled(false);
+
+                if (moviesToWatch.contains("f" + currentPosition))
+                    binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+
                 sharedViewModel.setCurrentFragmentInView("f" + position);
 
                 /*if (position == 1)
@@ -100,10 +105,12 @@ public class MovieCollectionFragment extends Fragment {
             if (aBoolean) {
 
                 binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+                moviesToWatch.add("f" + currentPosition);
 
             } else {
 
                 binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+                moviesToWatch.remove("f" + currentPosition);
 
             }
 
@@ -113,16 +120,26 @@ public class MovieCollectionFragment extends Fragment {
 
         sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), aBoolean -> {
 
-            binding.listImageView.setVisibility(View.VISIBLE);
-            binding.checkImageView.setVisibility(View.VISIBLE);
+            System.out.println("0F LOADED PROC!");
+            sharedViewModel.setIsPageReadyForScroll(true);
 
             if (aBoolean) {
 
-                binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+                binding.listImageView.setVisibility(View.VISIBLE);
+                binding.checkImageView.setVisibility(View.VISIBLE);
+
+
+                // TODO
+                //binding.checkImageView.setBackgroundResource(R.color.colorGreenTrans);
+
+                //binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+
 
             } else {
 
-                binding.checkImageView.setBackgroundResource(R.color.colorLightTrans);
+                binding.listImageView.setVisibility(View.GONE);
+                binding.checkImageView.setVisibility(View.GONE);
+                viewPager2.setUserInputEnabled(false);
 
             }
 

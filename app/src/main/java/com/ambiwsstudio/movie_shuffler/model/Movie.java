@@ -1,10 +1,8 @@
 package com.ambiwsstudio.movie_shuffler.model;
 
 import android.graphics.Bitmap;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -127,12 +125,12 @@ public class Movie {
         this.image = image;
     }
 
-    public String getResponse() {
-        return response;
-    }
-
     public @NonNull String getImdbIdClear() {
         return imdbIdClear;
+    }
+
+    public String getResponse() {
+        return response;
     }
 
     public String getPoster() {

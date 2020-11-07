@@ -1,9 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.adapter;
 
 import android.view.ViewGroup;
-
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;

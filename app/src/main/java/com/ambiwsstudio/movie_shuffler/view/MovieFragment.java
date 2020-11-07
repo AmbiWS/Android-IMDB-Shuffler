@@ -3,22 +3,18 @@ package com.ambiwsstudio.movie_shuffler.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
@@ -54,7 +50,7 @@ public class MovieFragment extends Fragment {
             ARG_TAG = args.getString(ARG_TAG);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
-        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(ARG_TAG, MovieViewModel.class);
+        MovieViewModel movieViewModel = new ViewModelProvider(this).get(ARG_TAG, MovieViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setMovieViewModel(movieViewModel);
         binding.linearLayout.setVisibility(View.GONE);
@@ -125,18 +121,8 @@ public class MovieFragment extends Fragment {
 
             if (s.equals(this.getTag())) {
 
-                System.out.println("CURRENT FRAGMENT GET");
-                System.out.println(this.getTag());
                 sharedViewModel.setCurrentMovie(currentMovie);
-
-                sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-
-                        smoothScrollDown();
-
-                    }
-                });
+                sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), aBoolean -> smoothScrollDown());
 
             } else {
 

@@ -1,9 +1,7 @@
 package com.ambiwsstudio.movie_shuffler.adapter;
 
 import android.os.Bundle;
-
 import com.ambiwsstudio.movie_shuffler.view.MovieFragment;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -18,20 +16,6 @@ public class MovieCollectionPagerAdapter extends FragmentStateAdapter {
         super(fa);
 
     }
-
-    /*@Override
-    public long getItemId(int position) {
-
-        return super.getItemId(position);
-
-    }
-
-    @Override
-    public boolean containsItem(long itemId) {
-
-        return super.containsItem(itemId);
-
-    }*/
 
     @NonNull
     @Override

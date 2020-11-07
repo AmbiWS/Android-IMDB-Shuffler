@@ -1,7 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.adapter;
 
 import android.util.Log;
-
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;

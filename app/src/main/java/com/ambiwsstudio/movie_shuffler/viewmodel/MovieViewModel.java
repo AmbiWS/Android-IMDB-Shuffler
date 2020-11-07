@@ -2,10 +2,8 @@ package com.ambiwsstudio.movie_shuffler.viewmodel;
 
 import android.util.Log;
 import android.view.View;
-
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 

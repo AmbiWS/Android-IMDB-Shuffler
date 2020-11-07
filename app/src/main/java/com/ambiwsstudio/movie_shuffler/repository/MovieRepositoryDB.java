@@ -1,11 +1,8 @@
 package com.ambiwsstudio.movie_shuffler.repository;
 
 import android.app.Application;
-
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-
 import java.util.List;
-
 import androidx.lifecycle.LiveData;
 
 public class MovieRepositoryDB {

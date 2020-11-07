@@ -1,12 +1,9 @@
 package com.ambiwsstudio.movie_shuffler.repository;
 
 import android.content.Context;
-
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;

@@ -6,10 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryDB;
 
 import androidx.annotation.NonNull;
@@ -74,19 +72,8 @@ public class MovieCollectionViewModel extends AndroidViewModel {
         Log.i("MovieCollectionVM", "SaveClick Caught: " + view.toString());
         ImageView imageView = (ImageView) view;
 
-        if (((ColorDrawable) imageView.getBackground()).getColor()
-                == ((ColorDrawable) getApplication().getResources().getDrawable(R.color.colorLightTrans)).getColor()) {
-
-            //lastMovie.setImdbIdClear(lastMovie.getImdbID().substring(2));
-            //repositoryDB.insertMovie(lastMovie);
-            isMovieToWatch.setValue(true);
-
-        } else {
-
-            //repositoryDB.deleteMovieById(lastMovie.getImdbID().substring(2));
-            isMovieToWatch.setValue(false);
-
-        }
+        isMovieToWatch.setValue(((ColorDrawable) imageView.getBackground()).getColor()
+                == ((ColorDrawable) getApplication().getResources().getDrawable(R.color.colorLightTrans)).getColor());
 
     }
 

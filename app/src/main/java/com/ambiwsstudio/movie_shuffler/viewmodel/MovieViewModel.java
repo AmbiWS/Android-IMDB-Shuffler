@@ -1,11 +1,11 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
-import android.util.Log;
 import android.view.View;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import timber.log.Timber;
 
 public class MovieViewModel extends ViewModel {
 
@@ -48,7 +48,7 @@ public class MovieViewModel extends ViewModel {
 
     public void onClick(View view) {
 
-        Log.i("MovieViewModel", "Click event caught: " + view.toString());
+        Timber.d("MovieViewModel -> " + "Click event caught: " + view.toString());
 
         if (movieMutableLiveData.getValue() != null)
             imdbProceedAccess.setValue(movieMutableLiveData.getValue().getImdbID());

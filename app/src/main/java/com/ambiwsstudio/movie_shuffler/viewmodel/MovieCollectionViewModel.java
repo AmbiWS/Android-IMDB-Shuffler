@@ -3,16 +3,15 @@ package com.ambiwsstudio.movie_shuffler.viewmodel;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryDB;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import timber.log.Timber;
 
 public class MovieCollectionViewModel extends AndroidViewModel {
 
@@ -47,7 +46,7 @@ public class MovieCollectionViewModel extends AndroidViewModel {
 
     public void onListClick(View view) {
 
-        Log.i("MovieCollectionVM", "ListClick Caught: " + view.toString());
+        Timber.d("MovieCollectionVM -> " + "ListClick Caught: " + view.toString());
         isAccessedToList.setValue(true);
 
     }
@@ -69,7 +68,7 @@ public class MovieCollectionViewModel extends AndroidViewModel {
     @SuppressLint("UseCompatLoadingForDrawables")
     public void onSaveClick(View view) {
 
-        Log.i("MovieCollectionVM", "SaveClick Caught: " + view.toString());
+        Timber.d("MovieCollectionVM ->" + "SaveClick Caught: " + view.toString());
         ImageView imageView = (ImageView) view;
 
         isMovieToWatch.setValue(((ColorDrawable) imageView.getBackground()).getColor()

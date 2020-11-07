@@ -2,7 +2,6 @@ package com.ambiwsstudio.movie_shuffler.repository;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.service.MovieAPI;
@@ -13,6 +12,7 @@ import java.util.ArrayDeque;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class MovieRepositoryAPI {
 
@@ -71,7 +71,7 @@ public class MovieRepositoryAPI {
 
             requestOverallCounter++;
             requestCurrentCounter++;
-            Log.i("MovieRepositoryAPI", "Retrofit request sending. A:" + requestOverallCounter + "/ C:" + requestCurrentCounter);
+            Timber.d("MovieRepositoryAPI ->" + "Retrofit request sending. A:" + requestOverallCounter + "/ C:" + requestCurrentCounter);
 
             api.getMovie(Commons.randomizeMovieId())
                     .enqueue(new Callback<Movie>() {

@@ -1,11 +1,9 @@
 package com.ambiwsstudio.movie_shuffler.application;
 
 import android.app.Application;
-
 import com.ambiwsstudio.movie_shuffler.BuildConfig;
 import com.ambiwsstudio.movie_shuffler.component.DaggerMovieComponent;
 import com.ambiwsstudio.movie_shuffler.component.MovieComponent;
-
 import timber.log.Timber;
 
 public class MovieShufflerApplication extends Application {

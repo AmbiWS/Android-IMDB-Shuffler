@@ -2,6 +2,8 @@ package com.ambiwsstudio.movie_shuffler.repository;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+
+import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.interfaces.MovieAPI;
@@ -9,6 +11,8 @@ import com.ambiwsstudio.movie_shuffler.service.MovieService;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import java.util.ArrayDeque;
+
+import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,7 +24,9 @@ import timber.log.Timber;
 @Module
 public class MovieRepositoryAPI {
 
-    private final MovieAPI api;
+    @Inject
+    public MovieAPI api;
+
     private final ArrayDeque<Movie> moviesBuffer;
     private int requestOverallCounter = 0;
     private int requestCurrentCounter = 0;
@@ -40,9 +46,9 @@ public class MovieRepositoryAPI {
 
     private MovieRepositoryAPI() {
 
-        api = MovieService.getInstance().getMovieAPI();
         moviesBuffer = new ArrayDeque<>();
         status = ServiceStatus.RUNNING;
+        MovieShufflerApplication.getComponent().injectsMovieRepositoryAPI(this);
 
         new Thread() {
 

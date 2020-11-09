@@ -1,7 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.storage;
 
 import android.content.Context;
-
 import com.ambiwsstudio.movie_shuffler.interfaces.MovieDao;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import java.util.concurrent.ExecutorService;

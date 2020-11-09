@@ -17,6 +17,8 @@ public class MovieCollectionViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> isMovieToWatch;
     private MutableLiveData<Boolean> isAccessedToList;
+
+
     private final MovieRepositoryDB repositoryDB;
 
     public MovieCollectionViewModel(@NonNull Application application) {

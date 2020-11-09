@@ -68,8 +68,10 @@ public class MovieCollectionFragment extends Fragment {
 
                 super.onPageSelected(position);
 
+                if (position != currentPosition)
+                    viewPager2.setUserInputEnabled(false);
+
                 currentPosition = position;
-                viewPager2.setUserInputEnabled(false);
 
                 if (moviesToWatch.contains("f" + currentPosition)) {
 

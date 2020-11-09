@@ -1,8 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.repository;
 
 import android.app.Application;
-
-import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.interfaces.MovieDao;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.storage.AppDatabase;

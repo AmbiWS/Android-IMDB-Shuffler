@@ -139,7 +139,7 @@ public class MovieRepositoryAPI {
 
         synchronized (this) {
 
-            notifyAll();
+            notify();
 
         }
 
@@ -170,19 +170,16 @@ public class MovieRepositoryAPI {
 
     }
 
-    // TODO removeFirst java.util.NoSuchElementException
     private Movie refillMovieAsync() {
 
         Movie movie = moviesBuffer.getFirst();
+        moviesBuffer.removeFirst();
 
         new Thread() {
 
             public void run() {
 
                 synchronized (this) {
-
-                    if (moviesBuffer.size() > 0)
-                        moviesBuffer.removeFirst();
 
                     fillMoviesBuffer();
 

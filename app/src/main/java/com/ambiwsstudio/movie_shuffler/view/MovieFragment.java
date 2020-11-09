@@ -170,7 +170,6 @@ public class MovieFragment extends Fragment {
             public void onFinish() {
 
                 isScrolled = true;
-                System.out.println(MovieFragment.this.getTag());
                 sharedViewModel.setIsPageScrolled(true);
 
             }

@@ -6,25 +6,34 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import com.ambiwsstudio.movie_shuffler.R;
+import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
+import com.ambiwsstudio.movie_shuffler.component.DaggerMovieComponent;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
+import com.ambiwsstudio.movie_shuffler.modules.StorageModule;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryDB;
+
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import timber.log.Timber;
 
-public class MovieCollectionViewModel extends AndroidViewModel {
+
+public class MovieCollectionViewModel extends ViewModel {
+
+    MovieRepositoryDB repository;
+    Application application;
 
     private MutableLiveData<Boolean> isMovieToWatch;
     private MutableLiveData<Boolean> isAccessedToList;
 
+    @Inject
+    public MovieCollectionViewModel(MovieRepositoryDB repository, Application application) {
 
-    private final MovieRepositoryDB repositoryDB;
-
-    public MovieCollectionViewModel(@NonNull Application application) {
-
-        super(application);
-        repositoryDB = new MovieRepositoryDB(application);
+        this.application = application;
+        this.repository = repository;
 
     }
 
@@ -57,11 +66,11 @@ public class MovieCollectionViewModel extends AndroidViewModel {
 
         if (bool) {
 
-            repositoryDB.insertMovie(movie);
+            repository.insertMovie(movie);
 
         } else {
 
-            repositoryDB.deleteMovieById(movie.getImdbIdClear());
+            repository.deleteMovieById(movie.getImdbIdClear());
 
         }
 
@@ -74,7 +83,7 @@ public class MovieCollectionViewModel extends AndroidViewModel {
         ImageView imageView = (ImageView) view;
 
         isMovieToWatch.setValue(((ColorDrawable) imageView.getBackground()).getColor()
-                == ((ColorDrawable) getApplication().getResources().getDrawable(R.color.colorLightTrans)).getColor());
+                == ((ColorDrawable) application.getResources().getDrawable(R.color.colorLightTrans)).getColor());
 
     }
 

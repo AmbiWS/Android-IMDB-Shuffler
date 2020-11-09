@@ -6,17 +6,25 @@ import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.storage.AppDatabase;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javax.inject.Inject;
+
 import androidx.lifecycle.LiveData;
 
 public class MovieRepositoryDB {
 
     private final MovieDao dao;
     private final LiveData<List<Movie>> observableMoviesDB;
+    private static final int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public MovieRepositoryDB(Application application) {
+    @Inject
+    public MovieRepositoryDB(MovieDao dao) {
 
-        AppDatabase database = AppDatabase.getInstance(application);
-        dao = database.movieDao();
+        this.dao = dao;
         observableMoviesDB = dao.getAll();
 
     }
@@ -29,13 +37,13 @@ public class MovieRepositoryDB {
 
     public void insertMovie(final Movie movie) {
 
-        AppDatabase.databaseWriteExecutor.execute(() -> dao.insertMovie(movie));
+        databaseWriteExecutor.execute(() -> dao.insertMovie(movie));
 
     }
 
     public void deleteMovieById(String id) {
 
-        AppDatabase.databaseWriteExecutor.execute(() -> dao.deleteMovieById(id));
+        databaseWriteExecutor.execute(() -> dao.deleteMovieById(id));
 
     }
 

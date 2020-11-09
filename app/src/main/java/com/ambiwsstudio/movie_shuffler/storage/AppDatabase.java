@@ -17,7 +17,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MovieDao movieDao();
 
-    private static volatile AppDatabase instance;
+    /*private static volatile AppDatabase instance;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -44,6 +44,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
         return instance;
 
-    }
+    }*/
 
 }

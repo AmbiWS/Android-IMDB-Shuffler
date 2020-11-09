@@ -7,10 +7,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.os.Bundle;
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieListAdapter;
+import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.databinding.ActivityMovieListBinding;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieListViewModel;
 
+import javax.inject.Inject;
+
 public class MovieListActivity extends AppCompatActivity {
+
+    @Inject
+    MovieListViewModel movieListViewModel;
 
     ActivityMovieListBinding binding;
 
@@ -18,8 +24,8 @@ public class MovieListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        ((MovieShufflerApplication) getApplication()).getComponent().injectMovieListActivity(this);
 
-        MovieListViewModel movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
         binding = DataBindingUtil.setContentView(MovieListActivity.this, R.layout.activity_movie_list);
         binding.setLifecycleOwner(this);
         binding.setMovieListViewModel(movieListViewModel);

@@ -1,8 +1,10 @@
 package com.ambiwsstudio.movie_shuffler.modules;
 
 import android.app.Application;
-import android.content.Context;
+
+import com.ambiwsstudio.movie_shuffler.interfaces.ApplicationContext;
 import com.ambiwsstudio.movie_shuffler.interfaces.MovieDao;
+import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryDB;
 import com.ambiwsstudio.movie_shuffler.storage.AppDatabase;
 
 import javax.inject.Singleton;
@@ -16,7 +18,7 @@ public class StorageModule {
 
     AppDatabase appDatabase;
 
-    StorageModule (Application application) {
+    public StorageModule (@ApplicationContext Application application) {
 
         appDatabase = Room.databaseBuilder(application,
                 AppDatabase.class, "aws-itvs-db")
@@ -27,7 +29,7 @@ public class StorageModule {
 
     @Provides
     @Singleton
-    AppDatabase providesAppDatabase() {
+    AppDatabase provideAppDatabase() {
 
         return appDatabase;
 
@@ -35,12 +37,19 @@ public class StorageModule {
 
     @Provides
     @Singleton
-    MovieDao providesMovieDao(AppDatabase appDatabase) {
+    MovieDao provideMovieDao(AppDatabase appDatabase) {
 
         return appDatabase.movieDao();
 
     }
 
+    @Provides
+    @Singleton
+    MovieRepositoryDB provideMovieRepositoryDB(MovieDao dao) {
+
+        return new MovieRepositoryDB(dao);
+
+    }
 
 
 }

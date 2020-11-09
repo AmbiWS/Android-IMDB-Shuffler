@@ -16,10 +16,15 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.ambiwsstudio.movie_shuffler.R;
+import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieBinding;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieViewModel;
+
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 public class MovieFragment extends Fragment {
 
@@ -28,8 +33,12 @@ public class MovieFragment extends Fragment {
     private FragmentMovieBinding binding;
     private ScrollView scrollView;
     private boolean isScrolled = false;
-    private MovieSharedViewModel sharedViewModel;
     private Movie currentMovie;
+
+    @Inject
+    MovieViewModel movieViewModel;
+
+    MovieSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -49,8 +58,11 @@ public class MovieFragment extends Fragment {
         if (args != null)
             ARG_TAG = args.getString(ARG_TAG);
 
+        ((MovieShufflerApplication) Objects.requireNonNull(getActivity()).getApplication()).getComponent().injectMovieFragment(this);
+
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
-        MovieViewModel movieViewModel = new ViewModelProvider(this).get(ARG_TAG, MovieViewModel.class);
+        /*MovieViewModel movieViewModel = new ViewModelProvider(this).get(ARG_TAG, MovieViewModel.class);*/
+
         binding.setLifecycleOwner(this);
         binding.setMovieViewModel(movieViewModel);
         binding.linearLayout.setVisibility(View.GONE);

@@ -13,20 +13,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
+import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBinding;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
 import java.util.HashSet;
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 public class MovieCollectionFragment extends Fragment {
 
-    private MovieSharedViewModel sharedViewModel;
     private final HashSet<String> moviesToWatch = new HashSet<>();
     private int currentPosition = -1;
     private Movie currentMovie;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
+
+    @Inject
+    MovieCollectionViewModel movieCollectionViewModel;
+
+    MovieSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,9 +50,12 @@ public class MovieCollectionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        ((MovieShufflerApplication) Objects.requireNonNull(getActivity()).getApplication()).getComponent().injectMovieCollectionFragment(this);
         currentMovie = new Movie();
+
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
-        MovieCollectionViewModel movieCollectionViewModel = new ViewModelProvider(this).get(MovieCollectionViewModel.class);
+        /*MovieCollectionViewModel movieCollectionViewModel = new ViewModelProvider(this).get(MovieCollectionViewModel.class);*/
+
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);
 

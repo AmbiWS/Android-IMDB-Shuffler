@@ -27,8 +27,29 @@ public class MovieViewModel extends ViewModel {
     private MutableLiveData<String> isErrorOccurred;
     private final MutableLiveData<Movie> movieMutableLiveData;
 
-    @Inject
     MovieRepositoryAPI movieRepositoryAPI;
+
+    @Inject
+    public MovieViewModel(MovieRepositoryAPI movieRepositoryAPI) {
+
+        this.movieRepositoryAPI = movieRepositoryAPI;
+        movieMutableLiveData = new MutableLiveData<>();
+
+        new Thread() {
+
+            public void run() {
+
+                Movie movie = movieRepositoryAPI.getFirstMovieInQueue();
+
+                if (movie.getResponse() == null)
+                    isErrorOccurred.postValue("Error");
+                else movieMutableLiveData.postValue(movie);
+
+            }
+
+        }.start();
+
+    }
 
     public MutableLiveData<Movie> getMovie() {
 
@@ -61,27 +82,6 @@ public class MovieViewModel extends ViewModel {
         if (movieMutableLiveData.getValue() != null)
             imdbProceedAccess.setValue(movieMutableLiveData.getValue().getImdbID());
         else imdbProceedAccess.setValue("N/A");
-
-    }
-
-    public MovieViewModel() {
-
-        MovieShufflerApplication.getComponent().injectsMovieViewModel(this);
-        movieMutableLiveData = new MutableLiveData<>();
-
-        new Thread() {
-
-            public void run() {
-
-                Movie movie = movieRepositoryAPI.getFirstMovieInQueue();
-
-                if (movie.getResponse() == null)
-                    isErrorOccurred.postValue("Error");
-                else movieMutableLiveData.postValue(movie);
-
-            }
-
-        }.start();
 
     }
 

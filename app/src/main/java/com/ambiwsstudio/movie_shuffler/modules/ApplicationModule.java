@@ -1,6 +1,9 @@
 package com.ambiwsstudio.movie_shuffler.modules;
 
 import android.app.Application;
+import android.content.Context;
+
+import com.ambiwsstudio.movie_shuffler.interfaces.ApplicationContext;
 
 import javax.inject.Singleton;
 
@@ -20,7 +23,16 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    Application providesApplication() {
+    @ApplicationContext
+    Context provideContext() {
+
+        return application;
+
+    }
+
+    @Provides
+    @Singleton
+    Application provideApplication() {
 
         return application;
 

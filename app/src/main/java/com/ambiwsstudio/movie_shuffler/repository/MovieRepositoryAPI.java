@@ -10,6 +10,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import java.util.ArrayDeque;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +26,7 @@ public class MovieRepositoryAPI {
     private ServiceStatus status;
     private Target target;
 
+    @Inject
     public MovieRepositoryAPI(MovieAPI api) {
 
         this.api = api;

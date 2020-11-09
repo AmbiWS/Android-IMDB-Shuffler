@@ -1,4 +1,4 @@
-package com.ambiwsstudio.movie_shuffler.repository;
+package com.ambiwsstudio.movie_shuffler.interfaces;
 
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import java.util.List;

@@ -1,13 +1,18 @@
-package com.ambiwsstudio.movie_shuffler.repository;
+package com.ambiwsstudio.movie_shuffler.storage;
 
 import android.content.Context;
+
+import com.ambiwsstudio.movie_shuffler.interfaces.MovieDao;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import dagger.Module;
+import dagger.Provides;
 
+@Module
 @Database(entities = {Movie.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -15,10 +20,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
     private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
+    public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static AppDatabase getInstance(final Context context) {
+    @Provides
+    public static AppDatabase getInstance(final Context context) {
 
         if (instance == null) {
 

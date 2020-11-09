@@ -4,16 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.service.MovieAPI;
+import com.ambiwsstudio.movie_shuffler.interfaces.MovieAPI;
 import com.ambiwsstudio.movie_shuffler.service.MovieService;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import java.util.ArrayDeque;
+
+import dagger.Module;
+import dagger.Provides;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
+@Module
 public class MovieRepositoryAPI {
 
     private final MovieAPI api;
@@ -24,6 +28,7 @@ public class MovieRepositoryAPI {
     private Target target;
     private static MovieRepositoryAPI instance;
 
+    @Provides
     public static MovieRepositoryAPI getInstance() {
 
         if (instance == null)

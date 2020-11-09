@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ambiwsstudio.movie_shuffler.R;
 import androidx.recyclerview.widget.RecyclerView;
+import dagger.Module;
+import dagger.Provides;
 
+@Module
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final TextView movieItemView;
@@ -39,6 +42,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     }
 
+    @Provides
     static MovieViewHolder create(ViewGroup parent) {
 
         View view = LayoutInflater.from(parent.getContext())

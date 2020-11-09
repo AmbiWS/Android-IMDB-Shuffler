@@ -17,7 +17,6 @@ public class MovieRepositoryDB {
 
     public MovieRepositoryDB(Application application) {
 
-        MovieShufflerApplication.getComponent().injectsMovieRepositoryDB(this);
         AppDatabase database = AppDatabase.getInstance(application);
         dao = database.movieDao();
         observableMoviesDB = dao.getAll();

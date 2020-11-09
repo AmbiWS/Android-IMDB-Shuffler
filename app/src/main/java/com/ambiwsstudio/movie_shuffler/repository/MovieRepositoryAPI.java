@@ -3,52 +3,32 @@ package com.ambiwsstudio.movie_shuffler.repository;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.interfaces.MovieAPI;
-import com.ambiwsstudio.movie_shuffler.service.MovieService;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import java.util.ArrayDeque;
 
-import javax.inject.Inject;
-
-import dagger.Module;
-import dagger.Provides;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
-@Module
 public class MovieRepositoryAPI {
 
-    @Inject
     public MovieAPI api;
-
     private final ArrayDeque<Movie> moviesBuffer;
     private int requestOverallCounter = 0;
     private int requestCurrentCounter = 0;
     private ServiceStatus status;
     private Target target;
-    private static MovieRepositoryAPI instance;
 
-    @Provides
-    public static MovieRepositoryAPI getInstance() {
+    public MovieRepositoryAPI(MovieAPI api) {
 
-        if (instance == null)
-            instance = new MovieRepositoryAPI();
-
-        return instance;
-
-    }
-
-    private MovieRepositoryAPI() {
-
+        this.api = api;
         moviesBuffer = new ArrayDeque<>();
         status = ServiceStatus.RUNNING;
-        MovieShufflerApplication.getComponent().injectsMovieRepositoryAPI(this);
 
         new Thread() {
 

@@ -1,8 +1,13 @@
 package com.ambiwsstudio.movie_shuffler.viewmodel;
 
 import android.view.View;
+
+import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
+
+import javax.inject.Inject;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import timber.log.Timber;
@@ -21,6 +26,9 @@ public class MovieViewModel extends ViewModel {
     private MutableLiveData<String> imdbProceedAccess;
     private MutableLiveData<String> isErrorOccurred;
     private final MutableLiveData<Movie> movieMutableLiveData;
+
+    @Inject
+    MovieRepositoryAPI movieRepositoryAPI;
 
     public MutableLiveData<Movie> getMovie() {
 
@@ -58,13 +66,14 @@ public class MovieViewModel extends ViewModel {
 
     public MovieViewModel() {
 
+        MovieShufflerApplication.getComponent().injectsMovieViewModel(this);
         movieMutableLiveData = new MutableLiveData<>();
 
         new Thread() {
 
             public void run() {
 
-                Movie movie = MovieRepositoryAPI.getInstance().getFirstMovieInQueue();
+                Movie movie = movieRepositoryAPI.getFirstMovieInQueue();
 
                 if (movie.getResponse() == null)
                     isErrorOccurred.postValue("Error");

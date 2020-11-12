@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".test.AgeActivity"></activity>
+
+        <activity android:name=".test.AgeActivity" />
+
         <activity
             android:name=".view.MovieListActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
         <activity
             android:name=".view.MovieActivity"
             android:configChanges="orientation"

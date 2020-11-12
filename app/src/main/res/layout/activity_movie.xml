@@ -7,7 +7,7 @@
     android:background="@drawable/mainbg"
     tools:context=".view.MovieActivity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/movieCollectionFrame"
         android:name="com.ambiwsstudio.movie_shuffler.view.MovieCollectionFragment"
         android:layout_width="0dp"

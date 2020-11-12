@@ -73,11 +73,10 @@ public class MovieRepositoryAPI {
                         public void onResponse(Call<Movie> call, Response<Movie> response) {
 
                             if (response.body().getResponse().equals("False")
-                                    /*|| response.body().getTitle().contains("Episode")
+                                    || response.body().getTitle().contains("Episode")
                                     || response.body().getGenre().equals("N/A")
                                     || response.body().getYear().equals("N/A")
-                                    || response.body().getActors().equals("N/A")*/
-                                /*|| response.body().getPoster().equals("N/A")*/) {
+                                    || response.body().getActors().equals("N/A")) {
 
                                 fillMoviesBuffer();
 

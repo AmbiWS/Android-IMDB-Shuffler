@@ -2,8 +2,6 @@ package com.ambiwsstudio.movie_shuffler.viewmodel;
 
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 
-import javax.inject.Inject;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 

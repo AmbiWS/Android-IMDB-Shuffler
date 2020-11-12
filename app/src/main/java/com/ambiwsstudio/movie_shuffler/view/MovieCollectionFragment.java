@@ -51,10 +51,9 @@ public class MovieCollectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         ((MovieShufflerApplication) Objects.requireNonNull(getActivity()).getApplication()).getComponent().injectMovieCollectionFragment(this);
-        currentMovie = new Movie();
-
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
-        /*MovieCollectionViewModel movieCollectionViewModel = new ViewModelProvider(this).get(MovieCollectionViewModel.class);*/
+
+        currentMovie = new Movie();
 
         binding.setLifecycleOwner(this);
         binding.setMovieCollectionViewModel(movieCollectionViewModel);

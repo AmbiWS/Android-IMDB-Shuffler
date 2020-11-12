@@ -1,6 +1,6 @@
 package com.ambiwsstudio.movie_shuffler.modules;
 
-import com.ambiwsstudio.movie_shuffler.interfaces.MovieAPI;
+import com.ambiwsstudio.movie_shuffler.service.MovieAPI;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
 
 import javax.inject.Singleton;

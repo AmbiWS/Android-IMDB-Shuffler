@@ -2,7 +2,6 @@ package com.ambiwsstudio.movie_shuffler.viewmodel;
 
 import android.view.View;
 
-import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryAPI;
 

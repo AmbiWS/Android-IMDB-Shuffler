@@ -59,9 +59,7 @@ public class MovieFragment extends Fragment {
             ARG_TAG = args.getString(ARG_TAG);
 
         ((MovieShufflerApplication) Objects.requireNonNull(getActivity()).getApplication()).getComponent().injectMovieFragment(this);
-
         sharedViewModel = new ViewModelProvider(requireActivity()).get(MovieSharedViewModel.class);
-        /*MovieViewModel movieViewModel = new ViewModelProvider(this).get(ARG_TAG, MovieViewModel.class);*/
 
         binding.setLifecycleOwner(this);
         binding.setMovieViewModel(movieViewModel);

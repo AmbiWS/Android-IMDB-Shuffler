@@ -25,8 +25,6 @@ public class MovieShufflerApplication extends Application {
 
         component.injectMovieShufflerApplication(this);
 
-        //component = DaggerMovieComponent.create();
-
         if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
 

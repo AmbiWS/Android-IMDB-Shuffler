@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 
 import com.ambiwsstudio.movie_shuffler.commons.Commons;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.interfaces.MovieAPI;
+import com.ambiwsstudio.movie_shuffler.service.MovieAPI;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import java.util.ArrayDeque;

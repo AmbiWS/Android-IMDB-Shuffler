@@ -6,20 +6,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import com.ambiwsstudio.movie_shuffler.R;
-import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
-import com.ambiwsstudio.movie_shuffler.component.DaggerMovieComponent;
 import com.ambiwsstudio.movie_shuffler.model.Movie;
-import com.ambiwsstudio.movie_shuffler.modules.StorageModule;
 import com.ambiwsstudio.movie_shuffler.repository.MovieRepositoryDB;
 
 import javax.inject.Inject;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import timber.log.Timber;
-
 
 public class MovieCollectionViewModel extends ViewModel {
 

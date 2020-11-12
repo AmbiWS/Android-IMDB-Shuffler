@@ -2,7 +2,6 @@ package com.ambiwsstudio.movie_shuffler.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import android.os.Bundle;
 import com.ambiwsstudio.movie_shuffler.R;

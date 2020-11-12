@@ -1,6 +1,9 @@
 <resources>
 
-    <string name="app_name">Movie_Shuffler</string>
+    <string name="app_name">IMDB_Shuffler</string>
     <string name="imdbText"><u>Check it on IMDB</u></string>
+    <string name="go">Go!</string>
+    <string name="age">Age</string>
+    <string name="enter_your_age_below">Enter your age below:</string>
 
 </resources>

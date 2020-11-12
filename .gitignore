@@ -49,8 +49,6 @@ obj/
 /app/build.gradle
 /gradle.properties
 /settings.gradle
-/app/src/androidTest/
-/app/src/test/
 /gradlew
 /gradlew.bat
 /app/.gitignore

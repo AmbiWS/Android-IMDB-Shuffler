@@ -23,7 +23,6 @@ public class MovieViewModel extends ViewModel {
     public MutableLiveData<String> plot = new MutableLiveData<>();
     public MutableLiveData<String> imdbRating = new MutableLiveData<>();
     private MutableLiveData<String> imdbProceedAccess;
-    private MutableLiveData<String> isErrorOccurred;
     private final MutableLiveData<Movie> movieMutableLiveData;
 
     MovieRepositoryAPI movieRepositoryAPI;
@@ -40,9 +39,15 @@ public class MovieViewModel extends ViewModel {
 
                 Movie movie = movieRepositoryAPI.getFirstMovieInQueue();
 
-                if (movie.getResponse() == null)
-                    isErrorOccurred.postValue("Error");
-                else movieMutableLiveData.postValue(movie);
+                if (movie.getResponse() == null) {
+
+                    movieMutableLiveData.postValue(null);
+
+                } else {
+
+                    movieMutableLiveData.postValue(movie);
+
+                }
 
             }
 
@@ -53,15 +58,6 @@ public class MovieViewModel extends ViewModel {
     public MutableLiveData<Movie> getMovie() {
 
         return movieMutableLiveData;
-
-    }
-
-    public MutableLiveData<String> getErrorOccurred() {
-
-        if (isErrorOccurred == null)
-            isErrorOccurred = new MutableLiveData<>();
-
-        return isErrorOccurred;
 
     }
 

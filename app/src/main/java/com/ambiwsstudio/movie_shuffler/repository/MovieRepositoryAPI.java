@@ -51,6 +51,12 @@ public class MovieRepositoryAPI {
         moviesBuffer.clear();
         moviesBuffer.addFirst(new Movie());
 
+        synchronized (this) {
+
+            notify();
+
+        }
+
     }
 
     private void loadMovie() {

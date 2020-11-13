@@ -2,15 +2,20 @@ package com.ambiwsstudio.movie_shuffler.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.ambiwsstudio.movie_shuffler.R;
 import com.ambiwsstudio.movie_shuffler.adapter.MovieCollectionPagerAdapter;
 import com.ambiwsstudio.movie_shuffler.application.MovieShufflerApplication;
@@ -18,6 +23,7 @@ import com.ambiwsstudio.movie_shuffler.databinding.FragmentMovieCollectionBindin
 import com.ambiwsstudio.movie_shuffler.model.Movie;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieCollectionViewModel;
 import com.ambiwsstudio.movie_shuffler.viewmodel.MovieSharedViewModel;
+
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -28,6 +34,8 @@ public class MovieCollectionFragment extends Fragment {
     private final HashSet<String> moviesToWatch = new HashSet<>();
     private int currentPosition = -1;
     private Movie currentMovie;
+    private boolean userSwipe = false;
+    private boolean nextFreeze = false;
     FragmentMovieCollectionBinding binding;
     ViewPager2 viewPager2;
 
@@ -78,8 +86,31 @@ public class MovieCollectionFragment extends Fragment {
 
                 super.onPageSelected(position);
 
-                if (position != currentPosition)
+                if (nextFreeze) {
+
                     viewPager2.setUserInputEnabled(false);
+                    sharedViewModel.setCurrentFragmentInView("f" + position + "e");
+
+                    return;
+
+                }
+
+                if (position != currentPosition) {
+
+                    viewPager2.setUserInputEnabled(false);
+
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(() -> {
+
+                        if (userSwipe) {
+
+                            viewPager2.setUserInputEnabled(true);
+
+                        }
+
+                    }, 1500);
+
+                }
 
                 currentPosition = position;
 
@@ -133,18 +164,19 @@ public class MovieCollectionFragment extends Fragment {
 
         sharedViewModel.getIsPageLoaded().observe(getViewLifecycleOwner(), aBoolean -> {
 
-            sharedViewModel.setIsPageReadyForScroll(true);
-
             if (aBoolean) {
 
+                sharedViewModel.setIsPageReadyForScroll(true);
                 binding.listImageView.setVisibility(View.VISIBLE);
                 binding.checkImageView.setVisibility(View.VISIBLE);
+                userSwipe = true;
 
             } else {
 
                 binding.listImageView.setVisibility(View.GONE);
                 binding.checkImageView.setVisibility(View.GONE);
-                viewPager2.setUserInputEnabled(false);
+                userSwipe = false;
+                nextFreeze = true;
 
             }
 

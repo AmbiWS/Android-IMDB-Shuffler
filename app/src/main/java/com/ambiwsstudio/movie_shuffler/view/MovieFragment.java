@@ -70,6 +70,13 @@ public class MovieFragment extends Fragment {
 
         movieViewModel.getMovie().observe(getViewLifecycleOwner(), movie -> {
 
+            if (movie == null || movie.getTitle() == null) {
+
+                errorHandle();
+                return;
+
+            }
+
             movie.setImdbIdClear(movie.getImdbID().substring(2));
             currentMovie = movie;
             binding.linearLayout.setVisibility(View.VISIBLE);
@@ -120,19 +127,17 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        movieViewModel.getErrorOccurred().observe(getViewLifecycleOwner(), s -> {
-
-            if (s.equals("Error"))
-                errorHandle();
-
-        });
-
         sharedViewModel.getCurrentFragmentInView().observe(getViewLifecycleOwner(), s -> {
 
-            if (s.equals(this.getTag())) {
+            if (s.equals(this.getTag()) && currentMovie != null && currentMovie.getTitle() != null) {
 
                 sharedViewModel.setCurrentMovie(currentMovie);
                 sharedViewModel.getIsPageReadyForScroll().observe(getViewLifecycleOwner(), aBoolean -> smoothScrollDown());
+
+            } else if (s.equals(this.getTag() + "e")) {
+
+                binding.imageViewPoster.setImageResource(R.drawable.error);
+                binding.linearLayout.setVisibility(View.GONE);
 
             } else {
 

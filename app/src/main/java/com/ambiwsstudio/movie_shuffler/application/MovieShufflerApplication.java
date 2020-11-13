@@ -1,14 +1,10 @@
 package com.ambiwsstudio.movie_shuffler.application;
 
 import android.app.Application;
-import com.ambiwsstudio.movie_shuffler.BuildConfig;
 import com.ambiwsstudio.movie_shuffler.component.DaggerMovieComponent;
 import com.ambiwsstudio.movie_shuffler.component.MovieComponent;
 import com.ambiwsstudio.movie_shuffler.modules.ApplicationModule;
 import com.ambiwsstudio.movie_shuffler.modules.StorageModule;
-
-import leakcanary.LeakCanary;
-import timber.log.Timber;
 
 public class MovieShufflerApplication extends Application {
 
@@ -26,10 +22,10 @@ public class MovieShufflerApplication extends Application {
 
         component.injectMovieShufflerApplication(this);
 
-        if (BuildConfig.DEBUG)
+        /*if (BuildConfig.DEBUG)
             Timber.plant(new Timber.DebugTree());
 
-        Timber.d("LeakCanary config: %s", LeakCanary.getConfig());
+        Timber.d("LeakCanary config: %s", LeakCanary.getConfig());*/
 
     }
 
